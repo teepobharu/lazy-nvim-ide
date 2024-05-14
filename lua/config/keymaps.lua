@@ -1,7 +1,9 @@
 -- Keymaps are automatically loaded on the VeryLazy event
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
+require("mymappings_legacy")
 --
+-- remove above when migrated
 local Util = require("lazyvim.util")
 local Diagnostics = require("utils.diagnostics")
 local keymap = vim.keymap.set
@@ -194,3 +196,6 @@ keymap(
 -- Disable lazyterm keymaps, use toggleterm keymaps instead
 vim.api.nvim_del_keymap("n", "<leader>ft")
 vim.api.nvim_del_keymap("n", "<leader>fT")
+
+-----
+require("mymappings")
