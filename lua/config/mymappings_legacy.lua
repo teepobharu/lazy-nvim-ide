@@ -6,7 +6,7 @@
 local opts = { noremap = true, silent = true }
 -- local keymap = vim.api.nvim_set_keymap
 local map = vim.keymap.set
-local overrides = require("configs.overrides")
+local telescope_pickers = require("config.telescope_pickers")
 
 -- Setup keys
 -- check using :letmapleader or :let maplocalleader
@@ -33,18 +33,6 @@ vim.cmd([[
 -- ==============================
 -- Windows ======================
 -- ==============================
-
--- Resize with arrows
-map("n", "<C-Up>", ":resize -2<CR>", opts)
-map("n", "<C-Down>", ":resize +2<CR>", opts)
-map("n", "<C-Left>", ":vertical resize -2<CR>", opts)
-map("n", "<C-Right>", ":vertical resize +2<CR>", opts)
-
--- Resize with ESC keys - up down use for auto cmpl
-map("n", "<Up>", ":resize -2<CR>", opts)
-map("n", "<Down>", ":resize +2<CR>", opts)
-map("n", "<Left>", "<cmd>vertical resize -2<CR>", opts)
-map("n", "<Right>", "<cmd>vertical resize +2<CR>", opts)
 
 local function toggle_fold_or_clear_highlight()
   if vim.fn.foldlevel(".") > 0 then
@@ -180,7 +168,7 @@ local custom_pickers = nil
 local setCustomPickersAndRunPickers = function(cb)
   if not custom_pickers then
     print("Custom pickers not set")
-    custom_pickers = overrides.telescope.getPickers()
+    custom_pickers = telescope_pickers.telescope.getPickers()
   end
   custom_pickers[cb]()
 end
@@ -456,12 +444,3 @@ end, { silent = true, desc = "Open url" })
 map("n", "<Leader>nx", function()
   show_messages_window()
 end, { noremap = true, silent = true, desc = "Print float messages" })
-
------ LOCALLEADER ==========================
---   # which key migrate .nvim $HOME/.config/nvim/keys/which-key.vim
-map("n", "<localleader>q", ":q<CR>", { desc = "Close", noremap = true, silent = true })
-map("n", "<localleader>w", ":w<CR>", { desc = "Save file" })
-map("n", "<localleader>X", ":qall!<CR>", { desc = "Close All" })
--- files
-map("n", "<localleader>rl", ":luafile %<CR>", { desc = "Reload Lua file" })
--- map('n', 'localleader>rp', ':python3 %<CR>', { desc = "Run Python3" })
