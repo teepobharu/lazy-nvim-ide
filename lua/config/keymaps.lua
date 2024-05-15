@@ -1,7 +1,7 @@
 -- Keymaps are automatically loaded on the VeryLazy event
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
-require("mymappings_legacy")
+require("lua.config.mymappings_legacy")
 --
 -- remove above when migrated
 local Util = require("lazyvim.util")
@@ -198,4 +198,4 @@ vim.api.nvim_del_keymap("n", "<leader>ft")
 vim.api.nvim_del_keymap("n", "<leader>fT")
 
 -----
-require("mymappings")
+require("lua.config.mymappings")
