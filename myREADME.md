@@ -3,8 +3,9 @@
 ## TODOs
 
 - General
-  - [] zoxide setup
-  - [ ] Override lsp config mapping preoprly
+  - [ ] fix font
+  - [ ] zoxide setup
+  - [ ] Override lsp config mapping properly
   - [] cmp mapping C-space and more mapping config behavior <TAB> in comment check nvchad
 - Git
   - [ ] Diff view : https://github.com/sindrets/diffview.nvim?tab=readme-ov-file
@@ -15,7 +16,7 @@
     - enable file : https://github.com/kdheepak/lazygit.nvim/issues/22#issuecomment-1815426074
 - LSP
   - jsx comment not correct
-  - [] Omnisharp dotnet setup
+  - [x] Omnisharp dotnet setup
 
 Migration idea
 
@@ -105,18 +106,29 @@ gx - custom function to go to links or directly to github page plugin link
 - C-] go to tags - section (highlighted in red)
 - C-t to go back to previous location tag
 
-| Key    | Description                           |
-| ------ | ------------------------------------- |
-| zj / k | Navigate fold (useful in diff split ) |
+| Key             | Description                           |
+| --------------- | ------------------------------------- |
+| zj / k          | Navigate fold (useful in diff split ) |
+| FLASH           | -----------                           |
+| f/F/s           | search 1-back / 2                     |
+| S               | search visual block jump              |
+| vmode: , ; (+f) | search Quotes block                   |
 
 #### Files
 
-Nvim Tree
+Nvim Tree - TODO: Delete
 | Key | Description |
 | --- | ----------- |
 | <C-n> | Toggle NvimTree |
 | y | Copy file name (with ext) |
 | ge | copy base name (no ext) |
+| ------------- |
+| Option 1 | use fzf-telescope (on v mode ? )|
+| Option 2| telescope (can try this : https://github.com/nvim-telescope/telescope-fzf-native.nvim)
+
+Neo Tree
+
+- Fix
 
 CDs
 
@@ -171,7 +183,9 @@ Tables plugin (manual enabled)
 | \_fh              | Help Pages             |
 | \_fb              | Buffers                |
 
-|
+| <leader>+s+t | search todos |
+| - s+c | search commands |
+| - s + k | search keymaps |
 
 ### Git
 
@@ -243,6 +257,17 @@ Using formatters
 | [d and ]d  | Diagnostics Jump          |
 | <leader>ca | Code action - to help fix |
 | <leader>ld | Line diagnostics          |
+
+---
+
+| auto tag add support |
+| md : table on save format | not pretty line auto like TD mode |
+
+Coding
+| Key | Description |
+| ----- | ------|
+| Comment | gc<kjh> gcc |
+| Format | <leader>-cf |
 
 ### AI
 

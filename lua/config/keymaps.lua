@@ -1,7 +1,7 @@
 -- Keymaps are automatically loaded on the VeryLazy event
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
-require("lua.config.mymappings_legacy")
+require("config.mymappings_legacy")
 --
 -- remove above when migrated
 local Util = require("lazyvim.util")
@@ -119,14 +119,14 @@ keymap("n", "zv", "zMzvzz", {
 })
 
 -- Close current fold when open. Always open next fold.
-keymap("n", "zj", "zcjzOzz", {
-  desc = "Close current fold when open. Always open next fold.",
-})
-
--- Close current fold when open. Always open previous fold.
-keymap("n", "zk", "zckzOzz", {
-  desc = "Close current fold when open. Always open previous fold.",
-})
+-- keymap("n", "zj", "zcjzOzz", {
+--   desc = "Close current fold when open. Always open next fold.",
+-- })
+--
+-- -- Close current fold when open. Always open previous fold.
+-- keymap("n", "zk", "zckzOzz", {
+--   desc = "Close current fold when open. Always open previous fold.",
+-- })
 
 -- Better paste
 -- remap "p" in visual mode to delete the highlighted text without overwriting your yanked/copied text, and then paste the content from the unnamed register.
@@ -196,6 +196,11 @@ keymap(
 -- Disable lazyterm keymaps, use toggleterm keymaps instead
 vim.api.nvim_del_keymap("n", "<leader>ft")
 vim.api.nvim_del_keymap("n", "<leader>fT")
+vim.api.nvim_del_keymap("n", "<leader>l")
+vim.api.nvim_del_keymap("n", "<leader>L")
+
+keymap("n", "<leader>ll", "<cmd>Lazy<CR>", { desc = "Lazy" })
+keymap("n", "<leader>lx", "<cmd>LazyExtras<CR>", { desc = "Lazy Extras" })
 
 -----
-require("lua.config.mymappings")
+require("config.mymappings")

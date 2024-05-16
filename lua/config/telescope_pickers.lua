@@ -1,5 +1,7 @@
 local M = {}
 
+M.telescope = {}
+
 M.telescope.getPickers = function(opts)
   local conf = require("telescope.config").values
   local finders = require("telescope.finders")
