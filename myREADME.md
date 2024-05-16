@@ -1,33 +1,54 @@
 # Quickstart guidelines
 
 ## TODOs
+
 - General
-    - [x] zoxide setup 
-    - [ ] Override lsp config mapping preoprly
-    - [x] cmp mapping C-space and more mapping config behavior <TAB> in comment check nvchad
-- Git 
-    - [ ] Diff view : https://github.com/sindrets/diffview.nvim?tab=readme-ov-file
-- Telescopes 
-    - [ ] Improve telescope git files an grep
-    - [ ] Lazygit and dotfiles 
-        - https://github.com/jesseduffield/lazygit/discussions/1201#discussioncomment-2546527 
-        - enable file : https://github.com/kdheepak/lazygit.nvim/issues/22#issuecomment-1815426074
--  LSP
-    - jsx comment not correct 
-    - [x] Omnisharp dotnet setup 
+  - [] zoxide setup
+  - [ ] Override lsp config mapping preoprly
+  - [] cmp mapping C-space and more mapping config behavior <TAB> in comment check nvchad
+- Git
+  - [ ] Diff view : https://github.com/sindrets/diffview.nvim?tab=readme-ov-file
+- Telescopes
+  - [ ] Improve telescope git files an grep
+  - [ ] Lazygit and dotfiles
+    - https://github.com/jesseduffield/lazygit/discussions/1201#discussioncomment-2546527
+    - enable file : https://github.com/kdheepak/lazygit.nvim/issues/22#issuecomment-1815426074
+- LSP
+  - jsx comment not correct
+  - [] Omnisharp dotnet setup
 
+Migration idea
 
+- [x] lazygit install
+  - [ ] check tmux working
+        [ ] fzf style search file ?
+- [x] disable hardtime ?
+- [ ] keymap import before (not to conflict)
+- [ ] Fugitive setup + git root support
+- [ ] Session save and start page correct
+- [ ] neotree key settings change filter not to change when type
+- [ ] check keymap lazygit configure : https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
+- [ ] zoxide setup
+- [ ] table format
+      ( [ ]Optional)
+- [ ] git open branch url telescope
+      Key maps
+- [ ] gx open link (+ plugin)
+- [ ] Key maps
+  - [ ] resize Windows
+  - [ ] Sessions saved
+  - [ ] tab change ( or use gT ? )
+  - [ ] custom Cds , and copy file - or not ?
 
 ## Configurations
 
 ### Examples
 
+#### JellyDN:
 
-#### JellyDN: 
 - References: https://github.com/jellydn/lazy-nvim-ide?tab=readme-ov-file#try-with-docker
 
-
-```sh 
+```sh
 VOLUME=$(pwd)
 
 docker run -w /root -it --rm -v $VOLUME:/root/mount alpine:latest sh -uelic '
@@ -40,58 +61,38 @@ docker run -w /root -it --rm -v $VOLUME:/root/mount alpine:latest sh -uelic '
 ```
 
 Features
-- CMD LINE 
-- nice interface and terminal 
-- Native lazy leveration with extras folder to toggle by user 
+
+- CMD LINE
+- nice interface and terminal
+- Native lazy leveration with extras folder to toggle by user
 - Folding pairs guideline
 - Cleaner settings on telescope help see
 - Find with Telescope f cleaner
-- Testing (l-t) ??  - how it works ?
-- inline diagnostics 
+- Testing (l-t) ?? - how it works ?
+- inline diagnostics
 - Notificaiton
 
 Not have
-- gx open link (+ plugin)
-- Key maps 
-    - resize Windows
-    - Sessions saved 
-    - tab change ( or use gT ? )
-    - custom Cds , and copy file - or not ?
-
 
 Packages use
-- mason-lsp 
+
+- mason-lsp
 - toggleterm
-- neo-tree 
+- neo-tree
 - mini{pairs,comment}
 - flash ( jump and select scope (S-f-F))
 
+Some keys
 
-Migration idea
-- lazygit install 
-- disable hardtime ? 
-- keymap import  before (not to conflict)
-- Fugitive setup + git root support 
-- Session save and start page correct
-- neotree key settings change filter not to change when type 
-- check keymap lazygit configure : https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
-- zoxide setup
-(Optional)
-- git open branch url telescope 
+- C+/ toggle terminal
 
+### Windows
 
-Some keys 
-- C+/ toggle terminal 
-
-### Windows 
-
-
-| Key            | Description          |
-| -------------- | -----------          |
-| Esc-hl         | Resize screen        |
-| <leader>h/v    | Split                |
-| C-\ + C-n      | Terminal Normal Mode | 
-
+| Key         | Description          |
+| ----------- | -------------------- |
+| Esc-hl      | Resize screen        |
+| <leader>h/v | Split                |
+| C-\ + C-n   | Terminal Normal Mode |
 
 ### Navigations
 
@@ -99,44 +100,41 @@ gx - custom function to go to links or directly to github page plugin link
 
 - for LSP navigations see below LSP map
 
-
 #### Help Pages
-- C-] go to tags - section (highlighted in red) 
+
+- C-] go to tags - section (highlighted in red)
 - C-t to go back to previous location tag
 
-| Key        | Description                           |
-| ---------- | ----------                            |
-| zj / k     | Navigate fold (useful in diff split ) |
+| Key    | Description                           |
+| ------ | ------------------------------------- |
+| zj / k | Navigate fold (useful in diff split ) |
 
+#### Files
 
+Nvim Tree
+| Key | Description |
+| --- | ----------- |
+| <C-n> | Toggle NvimTree |
+| y | Copy file name (with ext) |
+| ge | copy base name (no ext) |
 
-#### Files 
-
-Nvim Tree 
-| Key   | Description               |
-| ---   | -----------               |
-| <C-n> | Toggle NvimTree           |
-| y     | Copy file name (with ext) |
-| ge    | copy base name (no ext)   |
-
-CDs 
+CDs
 
 | Key            | Description               |
-| ---            | -----------               |
+| -------------- | ------------------------- |
 | <leader>cd     | Change dir zoxide plugins |
 | <localleader>c | Change dir current file   |
 
 Config file settings / debug
 
 | Key       | Description                  |
-| ---       | -----------                  |
+| --------- | ---------------------------- |
 | <local>rl | include lua (check test.lua) |
 
-### Editing 
-
+### Editing
 
 | Key         | Description                          |
-| ----------  | ----------                           |
+| ----------- | ------------------------------------ |
 | C-s         | Save                                 |
 | <ll> w      | Save                                 |
 | Y, YY       | copy to system clipboard             |
@@ -146,56 +144,52 @@ Config file settings / debug
 | <leader> fm | Format whole file                    |
 | <leader> fF | Toggle Format on Save Buff(!)/Global |
 
-#### Refactoring 
+#### Refactoring
 
-1. Telescope select with tab + C+Q > send to quicklist 
-2. :copen to see the list 
-3. :cfdo %s/old/new/g | update  (use c flag substitude to make sure its correct)
-
+1. Telescope select with tab + C+Q > send to quicklist
+2. :copen to see the list
+3. :cfdo %s/old/new/g | update (use c flag substitude to make sure its correct)
 
 `Markdown` - manual enable on md files table mode auto format when type the  
-Tables plugin  (manual enabled)
+Tables plugin (manual enabled)
 
 'Notes' : Key works per buffer
-| Key         | Description    |
+| Key | Description |
 | ----------- | -------------- |
-| <leader> tm | Enable         |
-| <leader> tc | Delete column  |
-
+| <leader> tm | Enable |
+| <leader> tc | Delete column |
 
 ### Searching
 
 `Telescope` is main searching tools using <leader>f
 
-| Key            | Description            |
-| -------------- | -----------            |
-| _ft            | Find Telescope pickers |
-|  quick fix history |  (C-q) retrieve again | 
-| _ff            | Find Files             |
-| _fh            | Help Pages             |
-| _fb            | Buffers                |
-| 
+| Key               | Description            |
+| ----------------- | ---------------------- |
+| \_ft              | Find Telescope pickers |
+| quick fix history | (C-q) retrieve again   |
+| \_ff              | Find Files             |
+| \_fh              | Help Pages             |
+| \_fb              | Buffers                |
 
+|
 
 ### Git
 
-Telescope 
-| Key            | Description                 |
-| -------------- | -----------                 |
-| C-A-j/k        | Next Hunk                   |
-| ]c, [c         | Next Hunk                   |
-| <leader>gbc    | See files                   |
-| - enter        | apply commit change to file |
-| - split             | compare                     | 
+Telescope
+| Key | Description |
+| -------------- | ----------- |
+| C-A-j/k | Next Hunk |
+| ]c, [c | Next Hunk |
+| <leader>gbc | See files |
+| - enter | apply commit change to file |
+| - split | compare |
 
-
-Fugitive 
-
+Fugitive
 
 Status View
 
 | Key        | Description          |
-| ---        | -----------          |
+| ---------- | -------------------- |
 | <leader>gz | see git status       |
 | = / > \ <  | expand toggle diff   |
 | J/K        | next hunk            |
@@ -206,87 +200,78 @@ Status View
 Commit / Files View
 
 | Key                  | Description                |
-| ---                  | -----------                |
+| -------------------- | -------------------------- |
 | :Gclog               | See clean commit message   |
 | :Gclog -- %          | see commit of currnt file  |
 | g?                   | help                       |
 | gq                   | quit blame / menu          |
-| <leader> gb | Git Blame              |
-| - l         | Blame Line             |
-| - c         | Blame commit Telescope |
-| - L       | see commit with blame info |
+| <leader> gb          | Git Blame                  |
+| - l                  | Blame Line                 |
+| - c                  | Blame commit Telescope     |
+| - L                  | see commit with blame info |
 | C                    | go to commit of the file   |
 | <enter> / o / go / O | open file / split          |
 
-
-
-
 ### LSP
 
-Setup 
-
-
+Setup
 
 1. Install new LSP server
-    Add new language manually 
-        :MasonInstall will help download the deps 
+   Add new language manually
+   :MasonInstall will help download the deps
 
-    Next time when install in other PC add in config to ensure its installed 
-        :MasonInstallAll to install all LSP from config 
+   Next time when install in other PC add in config to ensure its installed
+   :MasonInstallAll to install all LSP from config
 
 2. Put the server in LSP-CONFIG loadup
-    - search the server name in server
-    - :help lspconfig-all
+   - search the server name in server
+   - :help lspconfig-all
 
-Using formatters 
+Using formatters
 `Conform` formatters will work once enable it on the file type config : supported formamter [here](https://github.com/stevearc/conform.nvim?tab=readme-ov-file#formatters)
+
 - install formatters via Mason
 - enable on config
-- enable format from lazy  = <leader>fm 
+- enable format from lazy = <leader>fm
 
-| Key            | Description               |
-| -------------- | -----------               |
-| K              | see documents params      |
-| gd             | See references            |
-| gr             | Reference lsp             |
-| gR             | References telescope      |
-| [d and ]d      | Diagnostics Jump          |
-| <leader>ca     | Code action - to help fix |
-| <leader>ld     | Line diagnostics          |
+| Key        | Description               |
+| ---------- | ------------------------- |
+| K          | see documents params      |
+| gd         | See references            |
+| gr         | Reference lsp             |
+| gR         | References telescope      |
+| [d and ]d  | Diagnostics Jump          |
+| <leader>ca | Code action - to help fix |
+| <leader>ld | Line diagnostics          |
 
+### AI
 
-### AI 
+#### ChatGPT
 
-#### ChatGPT 
+plugin: https://www.youtube.com/watch?v=jrFjtwm-R94&ab_channel=NerdSignals
 
-plugin: https://www.youtube.com/watch?v=jrFjtwm-R94&ab_channel=NerdSignals 
 - Act as (persona)
-- Docs 
+- Docs
 - Chat Grammar correct Bug fixes, Explain
 
-
-#### Copilot 
+#### Copilot
 
 https://github.com/CopilotC-Nvim/CopilotChat.nvim
 
 Copilot Chat
 
-
-| Key        | Description                                   |
-| ---------- | ----------                                    |
-| <leader>a  | toggle commands
-| - m/M      | get commit message from current diff / staged |
-| <enter>    | continue question enter chat                  |
-
- 
+| Key       | Description                                   |
+| --------- | --------------------------------------------- |
+| <leader>a | toggle commands                               |
+| - m/M     | get commit message from current diff / staged |
+| <enter>   | continue question enter chat                  |
 
 ## Keyboards
 
 ### Views
 
 | Key          | Description                             |
-| ----------   | ----------                              |
+| ------------ | --------------------------------------- |
 | <esc>        | toggle fold if exists else no highlight |
 | VIM DEFAULTS | ----------                              |
 | <C-g>        | Show current file path                  |
- 
