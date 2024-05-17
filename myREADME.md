@@ -3,10 +3,11 @@
 ## TODOs
 
 - General
-  - [ ] fix font
-  - [ ] zoxide setup
-  - [ ] Override lsp config mapping properly
-  - [] cmp mapping C-space and more mapping config behavior <TAB> in comment check nvchad
+- [ ] local leader not working
+- [ ] fix font
+- [ ] zoxide setup
+- [ ] Override lsp config mapping properly
+- [] cmp mapping C-space and more mapping config behavior <TAB> in comment check nvchad
 - Git
   - [ ] Diff view : https://github.com/sindrets/diffview.nvim?tab=readme-ov-file
 - Telescopes
@@ -24,7 +25,7 @@ Migration idea
   - [ ] check tmux working
         [ ] fzf style search file ?
 - [x] disable hardtime ?
-- [ ] keymap import before (not to conflict)
+- [x] keymap import before (not to conflict)
 - [ ] Fugitive setup + git root support
 - [ ] Session save and start page correct
 - [ ] neotree key settings change filter not to change when type
@@ -36,9 +37,9 @@ Migration idea
       Key maps
 - [ ] gx open link (+ plugin)
 - [ ] Key maps
-  - [ ] resize Windows
-  - [ ] Sessions saved
-  - [ ] tab change ( or use gT ? )
+  - [x] resize Windows
+  - [x] Sessions saved
+  - [x] tab change ( or use gT ? )
   - [ ] custom Cds , and copy file - or not ?
 
 ## Configurations
@@ -115,6 +116,22 @@ gx - custom function to go to links or directly to github page plugin link
 | vmode: , ; (+f) | search Quotes block                   |
 
 #### Files
+
+Nvim Tree - TODO: Delete
+| Key | Description |
+| --- | ----------- |
+| <C-n> | Toggle NvimTree |
+| y | Copy file name (with ext) |
+| ge | copy base name (no ext) |
+| ------------- |
+| Option 1 | use fzf-telescope (on v mode ? )|
+| Option 2| telescope (can try this : https://github.com/nvim-telescope/telescope-fzf-native.nvim)
+
+Neo Tree
+
+- Fix
+
+CDs
 
 Nvim Tree - TODO: Delete
 | Key | Description |
@@ -227,22 +244,6 @@ Commit / Files View
 | <enter> / o / go / O | open file / split          |
 
 ### LSP
-
-Setup
-
-1. Install new LSP server
-   Add new language manually
-   :MasonInstall will help download the deps
-
-   Next time when install in other PC add in config to ensure its installed
-   :MasonInstallAll to install all LSP from config
-
-2. Put the server in LSP-CONFIG loadup
-   - search the server name in server
-   - :help lspconfig-all
-
-Using formatters
-`Conform` formatters will work once enable it on the file type config : supported formamter [here](https://github.com/stevearc/conform.nvim?tab=readme-ov-file#formatters)
 
 - install formatters via Mason
 - enable on config

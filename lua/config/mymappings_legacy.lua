@@ -9,27 +9,8 @@ local opts = { noremap = true, silent = true }
 local map = vim.keymap.set
 local telescope_pickers = require("config.telescope_pickers")
 
--- Setup keys
--- check using :letmapleader or :let maplocalleader
--- -> need to put inside plugins mapping also to make it work on those mapping
--- vim.g.maplocalleader = ","
--- Debug
-map("n", "<leader>wh", ":sp<CR>", { desc = "HSplit", silent = true })
-map("n", "<leader>wv", ":vs<CR>", { desc = "VSplit", silent = true })
-map("n", "<M-Tab>", ":tabnext<CR>", { noremap = true, silent = true })
--- H and L to change buffer
-map("n", "H", ":bp<CR>", { desc = "Previous Buffer", silent = true })
-map("n", "L", ":bn<CR>", { desc = "Next Buffer", silent = true })
-map("n", ";", ":", { desc = "CMD enter command mode" })
-map("i", "jk", "<ESC>", { desc = "Escape insert mode" })
-
 --
 -- -- HANDLE tab cmp completion in lua : https://github.com/nanotee/nvim-lua-guide#tips-4
--- command completion in command line mode
-vim.cmd([[
-  cnoremap <expr> <C-j> wildmenumode() ? "\<C-N>" : "\<C-j>"
-  cnoremap <expr> <C-k> wildmenumode() ? "\<C-P>" : "\<C-k>"
-]])
 
 -- ==============================
 -- Windows ======================
@@ -92,19 +73,6 @@ map("v", "Y", '"+y', { desc = "Copy to system clipboard" })
 map("v", "<C-c>", '"+y', { desc = "Copy to system clipboard" })
 -- copy to nvim only not system clipboard
 
---
--- Tmux navigation - move to plugins config
---
-map("n", "<C-k>", "<cmd>NvimTmuxNavigateUp<cr>", opts)
-map("n", "<C-j>", "<cmd>NvimTmuxNavigateDown<cr>", opts)
-map("n", "<C-h>", "<cmd>NvimTmuxNavigateLeft<cr>", opts)
-map("n", "<C-l>", "<cmd>NvimTmuxNavigateRight<cr>", opts)
-
-map("t", "<C-k>", "<cmd>NvimTmuxNavigateUp<cr>", opts)
-map("t", "<C-j>", "<cmd>NvimTmuxNavigateDown<cr>", opts)
-map("t", "<C-h>", "<cmd>NvimTmuxNavigateLeft<cr>", opts)
-map("t", "<C-l>", "<cmd>NvimTmuxNavigateRight<cr>", opts)
-
 -- ========================
 -- TO BE MIGRATED ============
 -- =====================
@@ -121,7 +89,8 @@ map("n", "<C-S-Left>", "<C-W>+", { desc = "Resize window up +2" })
 map("n", "<C-S-Right>", "<C-W>-", { desc = "Resize window down -2" })
 map("n", ",c", ":lcd%:p:h <CR>", { desc = "CD to current dir" })
 
--- map("n", "<A-k>", ":m .-2<cr>==", { desc = "Move up" })
+opts.desc = "Move up"
+-- map("n", "<A-k>", ":m .-2<cr>==", opts)
 -- map("n", "<A-j>", ":m .+1<cr>==", { desc = "Move down" })
 -- map("v", "<A-j>", ":m '>+1<cr>gv=gv", { desc = "Move down" })
 -- map("v", "<A-k>", ":m '<-2<cr>gv=gv", { desc = "Move up" })
@@ -230,29 +199,6 @@ map("n", "<leader>fZ", "<cmd>FindConfig<CR>", { desc = "Find Config files" })
 -- not work when inside tumx even no keys mapped ??
 -- map('n', '<C-S-j>', function()
 
-function gitsigns_jump_next_hunk()
-  if vim.wo.diff then
-    return "[c"
-  end
-  vim.schedule(function()
-    require("gitsigns").next_hunk()
-  end)
-  return "<Ignore>"
-end
-function gitsigns_jump_prev_hunk()
-  if vim.wo.diff then
-    return "[c"
-  end
-  vim.schedule(function()
-    require("gitsigns").prev_hunk()
-  end)
-  return "<Ignore>"
-end
-map("n", "<C-S-j>", gitsigns_jump_next_hunk, { desc = "Jump to next hunk", expr = true })
-map("n", "<C-M-j>", gitsigns_jump_next_hunk, { desc = "Jump to next hunk", expr = true })
-map("n", "<C-S-k>", gitsigns_jump_prev_hunk, { desc = "Jump to prev hunk", expr = true })
-map("n", "<C-M-k>", gitsigns_jump_prev_hunk, { desc = "Jump to prev hunk", expr = true })
-
 map("n", "<M-z>", function()
   require("gitsigns").reset_hunk()
 end, { desc = "Reset hunk" })
@@ -321,55 +267,3 @@ map("n", "<leader>gbl", ":Gitsigns toggle_current_line_blame<cr>", { silent = tr
 map("n", "<leader>gbL", ":Git blame<cr>", { silent = true, desc = "Git Blame" })
 map("n", "<leader>gbb", ":Git blame<cr>", { silent = true, desc = "Git Blame" })
 -- Gitsigns diffthis
-
--- ===========================
--- Custom commands ====================
--- =======================
-
-local function rename_buffer()
-  local old_name = vim.fn.expand("%")
-  local new_name = vim.fn.input("Enter new buffer name: ", old_name)
-
-  -- If user provided a new name and it's different from the old name
-  if new_name ~= "" and new_name ~= old_name then
-    -- Rename the buffer
-    vim.api.nvim_buf_set_name(0, new_name)
-    print("Buffer renamed to " .. new_name)
-  else
-    print("Buffer not renamed.")
-  end
-end
-
-map("n", "<leader>n", "", { desc = "+CustomCommands" })
-map("n", "<leader>nn", "<cmd>so $MYVIMRC<CR>", { desc = "Source Config" })
-map("n", "<leader>S", "<cmd>SSave<CR>", { desc = "Save Session" })
--- map('n', '<Leader>nm', ':messages <CR>', { noremap = true, silent = true, desc = 'Show messages' })
--- map('n', '<Leader>nM', [[:redir @a<CR>:messages<CR>:redir END<CR>:put! a<CR>]], { noremap = true, silent = true, desc = 'Print messages' })
--- copy relative filepath name
-map("n", "<leader>nf", ":let @+=@%<CR>", { desc = "Copy relative filepath name" })
--- Bind a key to invoke the renaming function
-map("n", "<leader>nr", rename_buffer, { desc = "Rename Buffer", noremap = true, silent = true })
-
--- copy absolute filepath
-map("n", "<leader>nF", ':let @+=expand("%:p")<CR>', { desc = "Copy absolute filepath" })
-
-local open_command = "xdg-open"
-if vim.fn.has("mac") == 1 then
-  open_command = "open"
-end
-
-local function url_repo()
-  local cursorword = vim.fn.expand("<cfile>")
-  if string.find(cursorword, "^[a-zA-Z0-9-_.]*/[a-zA-Z0-9-_.]*$") then
-    cursorword = "https://github.com/" .. cursorword
-  end
-  return cursorword or ""
-end
-
--- map("n", "gx", function()
---   vim.fn.jobstart({ open_command, url_repo() }, { detach = true }) -- not work in tmux
---   -- fallback to send gx if not a link or file
---   -- print("!" .. open_command .. " " .. url_repo())
---   -- vim.cmd("!" .. open_command .. " " .. url_repo())
--- end, { silent = true, desc = "Open url" })
---

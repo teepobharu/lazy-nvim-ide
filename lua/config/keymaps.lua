@@ -1,6 +1,7 @@
 -- Keymaps are automatically loaded on the VeryLazy event
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
+
 require("config.mymappings_legacy")
 --
 -- remove above when migrated
@@ -95,6 +96,7 @@ end, opts)
 
 -- Close buffers
 if Util.has("mini.bufremove") then
+  opts.desc = "Close buffer"
   keymap("n", "<S-q>", function()
     require("mini.bufremove").delete(0, false)
     local bufs = vim.fn.getbufinfo({ buflisted = true })
@@ -106,6 +108,8 @@ if Util.has("mini.bufremove") then
 else
   keymap("n", "<S-q>", "<cmd>bd<CR>", opts)
 end
+-- clear opts.desc
+opts.desc = nil
 
 -- ------------------------------------------------------------------------- }}}
 -- {{{ Folding commands.
