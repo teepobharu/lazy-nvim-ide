@@ -83,6 +83,9 @@ return {
       i = {
         ["C-v"] = open_selected_file_in_vertical,
       },
+      n = {
+        ["X"] = require("telescope.actions").delete_buffer,
+      },
     },
   },
 }
