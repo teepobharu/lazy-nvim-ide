@@ -7,9 +7,10 @@ return {
   {
     "nvim-neo-tree/neo-tree.nvim",
     -- https://github.com/LazyVim/LazyVim/blob/b601ade71c7f8feacf62a762d4e81cf99c055ea7/lua/lazyvim/plugins/editor.lua
+    -- original config: https://github.com/nvim-neo-tree/neo-tree.nvim?tab=readme-ov-file#quickstart
     opts = function(_, opts)
       -- use function to merge config (behiovr = force/override  )
-      opts = Util.merge(opts, {
+      Util.merge(opts, {
         filesystem = {
           window = {
             width = 30,

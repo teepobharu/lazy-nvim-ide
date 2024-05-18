@@ -6,10 +6,15 @@ return {
     "nvim-telescope/telescope.nvim",
   },
   config = function()
-    local t = require("telescope")
-    local z_utils = require("telescope._extensions.zoxide.utils")
+    local tele_status_ok, telescope = pcall(require, "telescope")
+    -- local t = require("telescope")
+    -- local z_utils = require("telescope._extensions.zoxide.utils")
     -- Configure telescope-zoxide
-    t.setup({
+    if not tele_status_ok then
+      return
+    end
+
+    telescope.setup({
       extensions = {
         zoxide = {
           prompt_title = "Zoxide ~ CD",
@@ -27,15 +32,21 @@ return {
                 vim.cmd.edit(selection.path)
               end,
             },
-            ["<C-q>"] = {
-              action = z_utils.create_basic_command("split"),
-            },
+            -- ["<C-q>"] = {
+            --   action = z_utils.create_basic_command("split"),
+            -- },
           },
         },
       },
       -- https://github.com/jvgrootveld/telescope-zoxide?tab=readme-ov-file
     })
-    -- t.load_extension("zoxide") -- please add inside telescope instead
-    keymap("n", "<leader>c.", t.extensions.zoxide.list, { desc = "Telescope Zoxide" })
+
+    -- Define a custom command to open aerial with telescope
+    vim.keymap.set("n", "<leader>c.", "<cmd>Telescope zoxide list<CR>", {
+      desc = "Telescope Zoxide",
+    })
+
+    telescope.load_extension("zoxide")
+    -- keymap("n", "<leader>c.", t.extensions.zoxide.list, { desc = "Telescope Zoxide" })
   end,
 }

@@ -53,6 +53,16 @@ return {
           preview_cutoff = 120,
         },
         path_display = { "truncate" },
+        mappings = {
+          i = {
+            -- ["C-v"] = open_selected_file_in_vertical,
+            ["<C-p>"] = require("telescope.actions.layout").toggle_preview,
+          },
+          n = {
+            ["X"] = require("telescope.actions").delete_buffer,
+            ["<C-p>"] = require("telescope.actions.layout").toggle_preview,
+          },
+        },
       },
     },
     keys = {
@@ -77,18 +87,6 @@ return {
           find_files_from_project_git_root()
         end,
         desc = "Find Files From Project Git Root",
-      },
-    },
-    mapping = {
-      i = {
-        ["C-v"] = open_selected_file_in_vertical,
-        ["<C-p>"] = require("telescope.actions.layout").toggle_preview,
-      },
-      n = {
-        ["X"] = function()
-          require("telescope.actions").delete_buffer()
-        end,
-        ["<C-p>"] = require("telescope.actions.layout").toggle_preview,
       },
     },
   },
