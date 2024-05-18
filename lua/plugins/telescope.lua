@@ -82,9 +82,13 @@ return {
     mapping = {
       i = {
         ["C-v"] = open_selected_file_in_vertical,
+        ["<C-p>"] = require("telescope.actions.layout").toggle_preview,
       },
       n = {
-        ["X"] = require("telescope.actions").delete_buffer,
+        ["X"] = function()
+          require("telescope.actions").delete_buffer()
+        end,
+        ["<C-p>"] = require("telescope.actions.layout").toggle_preview,
       },
     },
   },

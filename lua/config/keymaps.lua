@@ -44,7 +44,7 @@ end
 
 -- Disable `q` for macro recording as default
 -- Set initial state for 'q'
-vim.g.q_record_macro = false
+vim.g.q_record_macro = true
 
 -- Function to toggle 'q' functionality
 function _G.toggle_q_macro()
@@ -200,11 +200,6 @@ keymap(
 -- Disable lazyterm keymaps, use toggleterm keymaps instead
 vim.api.nvim_del_keymap("n", "<leader>ft")
 vim.api.nvim_del_keymap("n", "<leader>fT")
-vim.api.nvim_del_keymap("n", "<leader>l")
-vim.api.nvim_del_keymap("n", "<leader>L")
-
-keymap("n", "<leader>ll", "<cmd>Lazy<CR>", { desc = "Lazy" })
-keymap("n", "<leader>lx", "<cmd>LazyExtras<CR>", { desc = "Lazy Extras" })
 
 -----
 require("config.mymappings")
