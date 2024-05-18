@@ -23,3 +23,8 @@ if vim.g.neovide then
   vim.g.neovide_cursor_antialiasing = false
   vim.g.neovide_fullscreen = true
 end
+
+--  =========================
+-- MY SETTINGS -----------------
+--  =========================
+vim.g.maplocalleader = ","

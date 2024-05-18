@@ -3,8 +3,10 @@
 ## TODOs
 
 - General
+- [x] conform format line add key
 - [ ] local leader not working
-- [ ] fix font
+- [ ] fix font in md show strange when in i mode
+- [ ] telescope mapping not work
 - [ ] zoxide setup
 - [ ] Override lsp config mapping properly
 - [] cmp mapping C-space and more mapping config behavior <TAB> in comment check nvchad
@@ -12,6 +14,7 @@
   - [ ] Diff view : https://github.com/sindrets/diffview.nvim?tab=readme-ov-file
 - Telescopes
   - [ ] Improve telescope git files an grep
+  - [x] fzf search alike
   - [ ] Lazygit and dotfiles
     - https://github.com/jesseduffield/lazygit/discussions/1201#discussioncomment-2546527
     - enable file : https://github.com/kdheepak/lazygit.nvim/issues/22#issuecomment-1815426074
@@ -20,7 +23,6 @@
   - [x] Omnisharp dotnet setup
 
 Migration idea
-
 - [x] lazygit install
   - [ ] check tmux working
         [ ] fzf style search file ?
@@ -35,7 +37,7 @@ Migration idea
       ( [ ]Optional)
 - [ ] git open branch url telescope
       Key maps
-- [ ] gx open link (+ plugin)
+- [x] gx open link (+ plugin) + sometimes work in tmux ?
 - [ ] Key maps
   - [x] resize Windows
   - [x] Sessions saved
@@ -59,7 +61,6 @@ docker run -w /root -it --rm -v $VOLUME:/root/mount alpine:latest sh -uelic '
   git clone https://github.com/jellydn/lazy-nvim-ide ~/.config/nvim
   nvim
 '
-
 ```
 
 Features
@@ -74,8 +75,6 @@ Features
 - inline diagnostics
 - Notificaiton
 
-Not have
-
 Packages use
 
 - mason-lsp
@@ -84,7 +83,34 @@ Packages use
 - mini{pairs,comment}
 - flash ( jump and select scope (S-f-F))
 
-Some keys
+## Keymaps
+
+### General Guideliens
+
+Main lazy setup for plugins :
+<leader>-s + h(elp), b(uffers), t(odos), c(ommands), k(eymaps), f(replace)
+- telescope which-key (i = C-/)
+
+<leader>-f + f(iles), b(uffers),c(config)
+<leader>-u (UI) - toggle diagnostics / format /word wrap/blame, color scheme: https://www.lazyvim.org/plugins/ui
+<leader>-g + g(it), b(lame), c(ommit), s(tatus)
+- h => stage, diff
+
+<leader>-c (coding+format): https://www.lazyvim.org/plugins/coding
+- gs - surround : replace, delete
+
+<leader>-w + windows, splits, delete, move
+<leader>-TAB + create / move tabs
+<leader>-d => debug
+
+## Keymaps
+
+- lazy maps: https://www.lazyvim.org/keymaps#general
+  🤩 try to search the keys should already be there
+
+Hidden settings / keymaps 
+- i mode: calculator <C-r>=
+- q: is disabled by default 
 
 - C+/ toggle terminal
 

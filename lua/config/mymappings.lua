@@ -1,10 +1,18 @@
 local opts = { noremap = true, silent = true }
-local map = vim.keymap.set
-vim.g.maplocalleader = ","
+local keymap = vim.keymap.set
+-- ===========================
+-- LAZY NVIM ====================
+-- =======================
+vim.api.nvim_del_keymap("n", "<leader>l")
+vim.api.nvim_del_keymap("n", "<leader>L")
+
 -- Setup keys
 -- check using :letmapleader or :let maplocalleader
 -- -> need to put inside plugins mapping also to make it work on those mapping
 -- command completion in command line mode
+keymap("n", "<leader>ll", "<cmd>Lazy<CR>", { desc = "Lazy" })
+keymap("n", "<leader>lx", "<cmd>LazyExtras<CR>", { desc = "Lazy Extras" })
+
 vim.cmd([[
   cnoremap <expr> <C-j> wildmenumode() ? "\<C-N>" : "\<C-j>"
   cnoremap <expr> <C-k> wildmenumode() ? "\<C-P>" : "\<C-k>"
@@ -14,21 +22,22 @@ vim.cmd([[
 -- ============================
 -- Tmux navigation - move to plugins config
 --
-map("n", "<C-k>", "<cmd>NvimTmuxNavigateUp<cr>", opts)
-map("n", "<C-j>", "<cmd>NvimTmuxNavigateDown<cr>", opts)
-map("n", "<C-h>", "<cmd>NvimTmuxNavigateLeft<cr>", opts)
-map("n", "<C-l>", "<cmd>NvimTmuxNavigateRight<cr>", opts)
+keymap("n", "<C-k>", "<cmd>NvimTmuxNavigateUp<cr>", opts)
+keymap("n", "<C-j>", "<cmd>NvimTmuxNavigateDown<cr>", opts)
+keymap("n", "<C-h>", "<cmd>NvimTmuxNavigateLeft<cr>", opts)
+keymap("n", "<C-l>", "<cmd>NvimTmuxNavigateRight<cr>", opts)
 
-map("t", "<C-k>", "<cmd>NvimTmuxNavigateUp<cr>", opts)
-map("t", "<C-j>", "<cmd>NvimTmuxNavigateDown<cr>", opts)
-map("t", "<C-h>", "<cmd>NvimTmuxNavigateLeft<cr>", opts)
-map("t", "<C-l>", "<cmd>NvimTmuxNavigateRight<cr>", opts)
+keymap("t", "<C-k>", "<cmd>NvimTmuxNavigateUp<cr>", opts)
+keymap("t", "<C-j>", "<cmd>NvimTmuxNavigateDown<cr>", opts)
+keymap("t", "<C-h>", "<cmd>NvimTmuxNavigateLeft<cr>", opts)
+keymap("t", "<C-l>", "<cmd>NvimTmuxNavigateRight<cr>", opts)
+
 -- ============================
 --   Windows and Tabs
 -- ============================
-map("n", "<leader>wh", ":sp<CR>", { desc = "HSplit", silent = true })
-map("n", "<leader>wv", ":vs<CR>", { desc = "VSplit", silent = true })
-map("n", "<M-Tab>", ":tabnext<CR>", { noremap = true, silent = true })
+keymap("n", "<leader>wh", ":sp<CR>", { desc = "HSplit", silent = true })
+keymap("n", "<leader>wv", ":vs<CR>", { desc = "VSplit", silent = true })
+keymap("n", "<M-Tab>", ":tabnext<CR>", { noremap = true, silent = true })
 
 -- map("n", "<C-Up>", ":resize -3<CR>", opts)
 -- map("n", "<C-Down>", ":resize +3<CR>", opts)
@@ -36,10 +45,10 @@ map("n", "<M-Tab>", ":tabnext<CR>", { noremap = true, silent = true })
 -- map("n", "<C-Right>", ":vertical resize +3<CR>", opts)
 
 -- Resize with ESC keys - up down use for auto cmpl
-map("n", "<Up>", ":resize -3<CR>", opts)
-map("n", "<Down>", ":resize +3<CR>", opts)
-map("n", "<Left>", "<cmd>vertical resize -3<CR>", opts)
-map("n", "<Right>", "<cmd>vertical resize +3<CR>", opts)
+keymap("n", "<Up>", ":resize -3<CR>", opts)
+keymap("n", "<Down>", ":resize +3<CR>", opts)
+keymap("n", "<Left>", "<cmd>vertical resize -3<CR>", opts)
+keymap("n", "<Right>", "<cmd>vertical resize +3<CR>", opts)
 -- H and L to change buffer (LAZY)
 -- map("n", "H", ":bp<CR>", { desc = "Previous Buffer", silent = true })
 -- map("n", "L", ":bn<CR>", { desc = "Next Buffer", silent = true })
@@ -50,12 +59,15 @@ map("n", "<Right>", "<cmd>vertical resize +3<CR>", opts)
 -- ============================
 -- Terminal & Commands
 -- ============================
-map("n", ";", ":", { desc = "CMD enter command mode" })
--- map("i", "jk", "<ESC>", { desc = "Escape insert mode" })
--- Resize with arrows
-
--- close buffer
-
+keymap("n", ";", ":", { desc = "CMD enter command mode" })
+--
+-- ===========================================
+--  Search
+-- ===============================================
+-- before adding to search copy to system clipboard first
+keymap("v", "//", "y/\\V<C-R>=escape(@\",'/\\')<CR><CR>", { desc = "Search selected visual" })
+keymap("v", "//", "\"+y/\\V<C-R>=escape(@\",'/\\')<CR><CR>", { desc = "Search selected visual" })
+--
 -- ===========================================
 -- GIT
 -- ===============================================
@@ -78,20 +90,20 @@ function gitsigns_jump_prev_hunk()
   end)
   return "<Ignore>"
 end
-map("n", "<C-S-j>", gitsigns_jump_next_hunk, { desc = "Jump to next hunk", expr = true })
-map("n", "<C-M-j>", gitsigns_jump_next_hunk, { desc = "Jump to next hunk", expr = true })
-map("n", "<C-S-k>", gitsigns_jump_prev_hunk, { desc = "Jump to prev hunk", expr = true })
-map("n", "<C-M-k>", gitsigns_jump_prev_hunk, { desc = "Jump to prev hunk", expr = true })
+keymap("n", "<C-S-j>", gitsigns_jump_next_hunk, { desc = "Jump to next hunk", expr = true })
+keymap("n", "<C-M-j>", gitsigns_jump_next_hunk, { desc = "Jump to next hunk", expr = true })
+keymap("n", "<C-S-k>", gitsigns_jump_prev_hunk, { desc = "Jump to prev hunk", expr = true })
+keymap("n", "<C-M-k>", gitsigns_jump_prev_hunk, { desc = "Jump to prev hunk", expr = true })
 
 -- ===============================================
 -- LOCALLEADER ==========================
 -- ===============================================
 --   # which key migrate .nvim $HOME/.config/nvim/keys/which-key.vim
-map("n", "<localleader>q", ":q<CR>", { desc = "Close", noremap = true, silent = true })
-map("n", "<localleader>w", ":w<CR>", { desc = "Save file" })
-map("n", "<localleader>X", ":qall!<CR>", { desc = "Close All" })
+keymap("n", "<localleader>q", ":q<CR>", { desc = "Close", noremap = true, silent = true })
+keymap("n", "<localleader>w", ":w<CR>", { desc = "Save file" })
+keymap("n", "<localleader>X", ":qall!<CR>", { desc = "Close All" })
 -- files
-map("n", "<localleader>rl", ":luafile %<CR>", { desc = "Reload Lua file" })
+keymap("n", "<localleader>rl", ":luafile %<CR>", { desc = "Reload Lua file" })
 -- map('n', 'localleader>rp', ':python3 %<CR>', { desc = "Run Python3" })
 
 -- ===========================
@@ -122,7 +134,7 @@ end
 -- copy absolute filepath - use neotree (no relative file)
 -- map("n", "<leader>nF", ':let @+=expand("%:p")<CR>', { desc = "Copy absolute filepath" })
 -- Bind a key to invoke the renaming function
-map("n", "<leader>bR", rename_buffer, { desc = "Rename Buffer", noremap = true, silent = true })
+keymap("n", "<leader>bR", rename_buffer, { desc = "Rename Buffer", noremap = true, silent = true })
 
 local open_command = "xdg-open"
 if vim.fn.has("mac") == 1 then
@@ -131,17 +143,24 @@ end
 
 local function url_repo()
   local cursorword = vim.fn.expand("<cfile>")
+  -- __AUTO_GENERATED_PRINT_VAR_START__
+  print([==[url_repo cursorword:]==], vim.inspect(cursorword)) -- __AUTO_GENERATED_PRINT_VAR_END__
   if string.find(cursorword, "^[a-zA-Z0-9-_.]*/[a-zA-Z0-9-_.]*$") then
     cursorword = "https://github.com/" .. cursorword
   end
+  print(cursorword or "")
   return cursorword or ""
 end
 
-map("n", "gx", function()
-  vim.fn.jobstart({ open_command, url_repo() }, { detach = true }) -- not work in tmux
-  -- fallback to send gx if not a link or file
+keymap({ "n", "v" }, "gx", function()
+  local url_or_word = url_repo()
+  -- copy to register + if not empty
+  vim.fn.jobstart({ open_command, url_or_word }, { detach = true }) -- not work in tmux
+  if url_or_word ~= "" then
+    vim.fn.setreg("+", url_or_word)
+  end
+  -- fallback to send gx if not a link or files
+  -- vim.cmd("normal! gx")
   -- print("!" .. open_command .. " " .. url_repo())
   -- vim.cmd("!" .. open_command .. " " .. url_repo())
-end, { silent = true, desc = "Open url" })
---
---
+end, { silent = true, desc = "Copy word / Open url" })
