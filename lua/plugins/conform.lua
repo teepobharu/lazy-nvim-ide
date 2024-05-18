@@ -8,6 +8,20 @@ return {
     keys = {
       -- Add keymap for show info
       { "<leader>cn", "<cmd>ConformInfo<cr>", desc = "Conform Info" },
+      {
+        "<leader>cf",
+        function()
+          vim.lsp.buf.format({
+            async = true,
+            range = {
+              ["start"] = vim.api.nvim_buf_get_mark(0, "<"),
+              ["end"] = vim.api.nvim_buf_get_mark(0, ">"),
+            },
+          })
+        end,
+        mode = "v",
+        desc = "LSP Format",
+      },
     },
     opts = {
       formatters_by_ft = {
