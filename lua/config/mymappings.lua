@@ -13,10 +13,15 @@ vim.api.nvim_del_keymap("n", "<leader>L")
 keymap("n", "<leader>ll", "<cmd>Lazy<CR>", { desc = "Lazy" })
 keymap("n", "<leader>lx", "<cmd>LazyExtras<CR>", { desc = "Lazy Extras" })
 
+-- ============================
+-- EDITING
+-- ============================
+--
 vim.cmd([[
   cnoremap <expr> <C-j> wildmenumode() ? "\<C-N>" : "\<C-j>"
   cnoremap <expr> <C-k> wildmenumode() ? "\<C-P>" : "\<C-k>"
 ]])
+
 -- ============================
 --  Navigations
 -- ============================

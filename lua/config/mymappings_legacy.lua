@@ -89,7 +89,7 @@ map("n", "<C-S-Left>", "<C-W>+", { desc = "Resize window up +2" })
 map("n", "<C-S-Right>", "<C-W>-", { desc = "Resize window down -2" })
 map("n", ",c", ":lcd%:p:h <CR>", { desc = "CD to current dir" })
 
-opts.desc = "Move up"
+-- opts.desc = "Move up" ( set in lazy)
 -- map("n", "<A-k>", ":m .-2<cr>==", opts)
 -- map("n", "<A-j>", ":m .+1<cr>==", { desc = "Move down" })
 -- map("v", "<A-j>", ":m '>+1<cr>gv=gv", { desc = "Move down" })
