@@ -1,3 +1,4 @@
+local LazyVimUtil = require("lazyvim.util")
 local opts = { noremap = true, silent = true }
 local keymap = vim.keymap.set
 -- ===========================
@@ -12,6 +13,13 @@ vim.api.nvim_del_keymap("n", "<leader>L")
 -- command completion in command line mode
 keymap("n", "<leader>ll", "<cmd>Lazy<CR>", { desc = "Lazy" })
 keymap("n", "<leader>lx", "<cmd>LazyExtras<CR>", { desc = "Lazy Extras" })
+
+keymap("n", "<leader>lc", function()
+  LazyVimUtil.lazygit.open({
+    cwd = vim.fn.expand("~/.cfg"),
+    args = { "-w", vim.fn.expand("~"), "--git-dir", vim.fn.expand("~/.cfg") },
+  })
+end, { desc = "LazyGit Config" })
 
 -- ============================
 -- EDITING
