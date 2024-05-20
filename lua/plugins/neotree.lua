@@ -11,6 +11,58 @@ return {
     opts = function(_, opts)
       -- use function to merge config (behiovr = force/override  )
       Util.merge(opts, {
+        commands = {
+          copy_selector = function(state)
+            local node = state.tree:get_node()
+            local filepath = node:get_id()
+            local filename = node.name
+            local modify = vim.fn.fnamemodify
+
+            local results = {
+              filepath,
+              modify(filepath, ":."),
+              modify(filepath, ":~"),
+              filename,
+              modify(filename, ":r"),
+              modify(filename, ":e"),
+            }
+
+            vim.ui.select({
+              "1. Absolute path: " .. results[1],
+              "2. Path relative to CWD: " .. results[2],
+              "3. Path relative to HOME: " .. results[3],
+              "4. Filename: " .. results[4],
+              "5. Filename without extension: " .. results[5],
+              "6. Extension of the filename: " .. results[6],
+            }, { prompt = "Choose to copy to clipboard:" }, function(choice)
+              if choice then
+                local i = tonumber(choice:sub(1, 1))
+                if i then
+                  local result = results[i]
+                  vim.fn.setreg('"', result)
+                  vim.notify("Copied: " .. result)
+                else
+                  vim.notify("Invalid selection")
+                end
+              else
+                vim.notify("Selection cancelled")
+              end
+            end)
+          end,
+          copy_file_name_current = function(state)
+            local node = state.tree:get_node()
+            local filename = node.name
+            vim.fn.setreg('"', filename)
+            vim.notify("Copied: " .. filename)
+          end,
+          copy_abs_file = function(state)
+            local node = state.tree:get_node()
+            local filepath = node:get_id()
+            vim.fn.setreg('"', filepath)
+            vim.notify("Copied: " .. filepath)
+          end,
+        },
+        -- https://github.com/nvim-neo-tree/neo-tree.nvim/discussions/370
         filesystem = {
           window = {
             width = 30,
@@ -19,6 +71,10 @@ return {
               ["/"] = "none",
               ["f"] = "fuzzy_finder",
               ["F"] = "filter_on_submit",
+              ["<tab>"] = "toggle_node",
+              ["YY"] = "copy_selector",
+              ["Yp"] = "copy_file_name_current",
+              ["YP"] = "copy_abs_file",
             },
           },
           buffers = {
