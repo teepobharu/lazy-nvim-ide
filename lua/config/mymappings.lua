@@ -1,6 +1,7 @@
 local LazyVimUtil = require("lazyvim.util")
 local opts = { noremap = true, silent = true }
 local keymap = vim.keymap.set
+
 -- ===========================
 -- LAZY NVIM ====================
 -- =======================
@@ -29,6 +30,52 @@ vim.cmd([[
   cnoremap <expr> <C-j> wildmenumode() ? "\<C-N>" : "\<C-j>"
   cnoremap <expr> <C-k> wildmenumode() ? "\<C-P>" : "\<C-k>"
 ]])
+
+-- Duplicate line and preserve previous yank register
+--  support mode v as
+keymap("n", "<A-d>", function()
+  -- handle visual mode duplicate lien
+  local saved_unnamed = vim.fn.getreg('"')
+  local saved_unnamedplus = vim.fn.getreg("+")
+
+  local current_line = ""
+  local current_mode = vim.fn.visualmode()
+  if current_mode == "V" then
+    -- TODO: make it work
+    -- current_line = vim.fn.getline()
+  else
+    current_line = vim.fn.getline(".")
+  end
+  -- Save previous yank registers in a safe place
+  -- propmt inform to choose reg to save
+  -- print("Choose register to save")
+  -- local temp_register = vim.fn.nr2char(vim.fn.getchar()) -- choose char
+  local temp_register = "m"
+  vim.fn.setreg(temp_register, saved_unnamed, "a")
+  vim.fn.setreg('"', current_line, "a")
+  vim.fn.setreg("+", current_line, "a")
+  -- Duplicate the current line
+  -- vim.cmd('normal! yyp')
+  vim.api.nvim_input("yyp")
+  -- Restore previous yank registers
+  vim.fn.setreg('"', saved_unnamed, "a")
+  vim.fn.setreg("+", saved_unnamedplus, "a")
+  vim.fn.setreg(temp_register, "", "a")
+end, { desc = "Duplicate line and preserve yank register" })
+
+-- " Copy to system clipboard
+-- vnoremap <leader>y "+y
+-- nnoremap <leader>Y "+yg_
+-- nnoremap <leader>y "+y
+-- nnoremap <leader>yy "+yy
+
+-- copy to nvim only not system clipboard
+vim.opt.clipboard = ""
+
+keymap("n", "Y", '"+y', { desc = "Copy to system clipboard" })
+keymap("n", "YY", '"+yy', { desc = "Copy to system clipboard" })
+keymap("v", "Y", '"+y', { desc = "Copy to system clipboard" })
+keymap("v", "<C-c>", '"+y', { desc = "Copy to system clipboard" })
 
 -- ============================
 --  Navigations
@@ -69,10 +116,23 @@ keymap("n", "<Right>", "<cmd>vertical resize +3<CR>", opts)
 -- map("n", "<leader>wx", ":bd<CR>", { desc = "Close buffer" })
 -- map("n", "<leader>wX", ":bd!<CR>", { desc = "Force close buffer" })
 
--- ============================
+local function toggle_fold_or_clear_highlight()
+  if vim.fn.foldlevel(".") > 0 then
+    vim.api.nvim_input("za")
+  else
+    vim.cmd("nohlsearch")
+  end
+end
+keymap("n", "<Esc>", toggle_fold_or_clear_highlight, { expr = true, silent = true, noremap = true })
 -- Terminal & Commands
 -- ============================
 keymap("n", ";", ":", { desc = "CMD enter command mode" })
+vim.api.nvim_create_user_command("OpenTerminalInSplitWithCwd", function()
+  local cwd = vim.fn.expand("%:p:h")
+
+  vim.api.nvim_command("split | lcd " .. cwd .. " | terminal")
+end, {})
+keymap("n", "<Leader>t.", ":OpenTerminalInSplitWithCwd<CR>", { noremap = true, silent = true })
 --
 -- ===========================================
 --  Search
@@ -80,6 +140,7 @@ keymap("n", ";", ":", { desc = "CMD enter command mode" })
 -- before adding to search copy to system clipboard first
 keymap("v", "//", "y/\\V<C-R>=escape(@\",'/\\')<CR><CR>", { desc = "Search selected visual" })
 keymap("v", "//", "\"+y/\\V<C-R>=escape(@\",'/\\')<CR><CR>", { desc = "Search selected visual" })
+--
 --
 -- ===========================================
 -- GIT
@@ -107,7 +168,16 @@ keymap("n", "<C-S-j>", gitsigns_jump_next_hunk, { desc = "Jump to next hunk", ex
 keymap("n", "<C-M-j>", gitsigns_jump_next_hunk, { desc = "Jump to next hunk", expr = true })
 keymap("n", "<C-S-k>", gitsigns_jump_prev_hunk, { desc = "Jump to prev hunk", expr = true })
 keymap("n", "<C-M-k>", gitsigns_jump_prev_hunk, { desc = "Jump to prev hunk", expr = true })
-
+keymap("n", "<M-z>", function()
+  require("gitsigns").reset_hunk()
+end, { desc = "Reset hunk" })
+keymap("v", "<M-z>", ":Gitsigns reset_hunk<cr>", { desc = "Reset hunk" })
+-- Reconsidered
+-- keymap("n", "<leader>gbc", ":Telescope git_bcommits<cr>", { silent = true, desc = "Git BCommits" })
+-- keymap("n", "<leader>gbr", ":Telescope git_branches<cr>", { silent = true, desc = "Git Branches" })
+-- keymap("n", "<leader>gbl", ":Gitsigns toggle_current_line_blame<cr>", { silent = true, desc = "Blame Inline Toggle" })
+-- keymap("n", "<leader>gbL", ":Git blame<cr>", { silent = true, desc = "Git Blame" })
+-- keymap("n", "<leader>gbb", ":Git blame<cr>", { silent = true, desc = "Git Blame" })
 -- ===============================================
 -- LOCALLEADER ==========================
 -- ===============================================
@@ -115,6 +185,7 @@ keymap("n", "<C-M-k>", gitsigns_jump_prev_hunk, { desc = "Jump to prev hunk", ex
 keymap("n", "<localleader>q", ":q<CR>", { desc = "Close", noremap = true, silent = true })
 keymap("n", "<localleader>w", ":w<CR>", { desc = "Save file" })
 keymap("n", "<localleader>X", ":qall!<CR>", { desc = "Close All" })
+keymap("n", ",c", ":lcd%:p:h <CR>", { desc = "CD to current dir" })
 -- files
 keymap("n", "<localleader>rl", ":luafile %<CR>", { desc = "Reload Lua file" })
 -- map('n', 'localleader>rp', ':python3 %<CR>', { desc = "Run Python3" })
