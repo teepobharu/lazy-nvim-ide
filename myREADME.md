@@ -85,13 +85,14 @@ Packages use
 - mini{pairs,comment}
 - flash ( jump and select scope (S-f-F))
 
-## Keymaps
+## Keymaps Summary
 
 ### General Guideliens
 
 Main lazy setup for plugins :
 <leader>-s + h(elp), b(uffers), t(odos), c(ommands), k(eymaps), f(replace)
 
+- s(symbols) / <leader>o Symbols {W,E toggle fold}
 - telescope which-key (i = C-/)
 
 <leader>-f + f(iles), b(uffers),c(config)
@@ -122,13 +123,31 @@ Hidden settings / keymaps
 
 - C+/ toggle terminal
 
+### LSP
+
+- install formatters via Mason
+- enable on config
+- enable format from lazy = <leader>fm
+
+| Key        | Description                                     |
+| ---------- | ----------------------------------------------- |
+| K + K      | see documents params + move to the popup window |
+| gd         | See references                                  |
+| gr         | Reference lsp                                   |
+| gR         | References telescope                            |
+| [d and ]d  | Diagnostics Jump                                |
+| [e and ]e  | Errors Jump                                     |
+| <leader>ca | Code action - to help fix                       |
+| <leader>ld | Line diagnostics                                |
+
 ### Windows
 
-| Key         | Description          |
-| ----------- | -------------------- |
-| Esc-hl      | Resize screen        |
-| <leader>h/v | Split                |
-| C-\ + C-n   | Terminal Normal Mode |
+| Key              | Description            |
+| ---------------- | ---------------------- |
+| Esc-hl           | Resize screen          |
+| <leader>h/v      | Split                  |
+| C-\ + C-n        | Terminal Normal Mode   |
+| leader + b/w + d | Delete buffer / window |
 
 ### Navigations
 
@@ -148,6 +167,8 @@ gx - custom function to go to links or directly to github page plugin link
 | f/F/s           | search 1-back / 2                     |
 | S               | search visual block jump              |
 | vmode: , ; (+f) | search Quotes block                   |
+
+## Old section
 
 #### Files
 
@@ -262,7 +283,7 @@ Status View
 | X          | discard under cursor |
 | G          | Git Status           |
 
-Commit / Files View
+Commit / Files View - TODO OLD fugitive
 
 | Key                  | Description                |
 | -------------------- | -------------------------- |
@@ -276,22 +297,6 @@ Commit / Files View
 | - L                  | see commit with blame info |
 | C                    | go to commit of the file   |
 | <enter> / o / go / O | open file / split          |
-
-### LSP
-
-- install formatters via Mason
-- enable on config
-- enable format from lazy = <leader>fm
-
-| Key        | Description               |
-| ---------- | ------------------------- |
-| K          | see documents params      |
-| gd         | See references            |
-| gr         | Reference lsp             |
-| gR         | References telescope      |
-| [d and ]d  | Diagnostics Jump          |
-| <leader>ca | Code action - to help fix |
-| <leader>ld | Line diagnostics          |
 
 ---
 
