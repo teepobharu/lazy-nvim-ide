@@ -21,6 +21,7 @@
   "everforest": { "branch": "master", "commit": "3e5ec2550d0179fdc5b7ab3739730c71a4f3e5a0" },
   "flash.nvim": { "branch": "main", "commit": "11a2e667d19d8f48c93c6ed2e2e525ac6b1b79be" },
   "friendly-snippets": { "branch": "main", "commit": "d0610077b6129cf9f7f78afbe3a1425d60f6e2f1" },
+  "gen.nvim": { "branch": "main", "commit": "c404e217e1e0deb1f1aaa9e9ff61fc3e3c23efbe" },
   "gitsigns.nvim": { "branch": "main", "commit": "75dc649106827183547d3bedd4602442340d2f7f" },
   "harpoon": { "branch": "harpoon2", "commit": "0378a6c428a0bed6a2781d459d7943843f374bce" },
   "indent-blankline.nvim": { "branch": "master", "commit": "d98f537c3492e87b6dc6c2e3f66ac517528f406f" },
