@@ -28,14 +28,95 @@ local function live_grep_from_project_git_root()
 
   require("telescope.builtin").live_grep(opts)
 end
+-- Custom function to run fd command and get results
+local function run_fd_command(cmd)
+  local handle = io.popen(cmd)
+  local result = handle:read("*a")
+  handle:close()
+  return vim.split(result, "\n")
+end
+
+local context_options = { "home", "shallow home + config", ".config deep" }
+local current_index = 1
+
+local function toggle_context(prompt_bufnr)
+  local actions = require("telescope.actions")
+
+  -- cycle between options
+  current_index = current_index % #context_options + 1
+  current_context = context_options[current_index]
+
+  -- close the current picker
+  actions.close(prompt_bufnr)
+
+  -- re-run the picker with the new context
+  find_files_in_home_and_config()
+end
+
+-- custom picker function
+function find_files_in_home_and_config()
+  local commands_option = {
+    "fd --type f --hidden --max-depth 1 . ~",
+    "fd --type f --max-depth 1 . ~ ~/.config ",
+    "fd --type f --max-depth 14 . ~/.config -E '*.xml' -E 'coc/*' -E 'raycast' -E 'neovim' -E 'nvim' -E 'alfred' -E 'karabiner/automatic_backups'",
+  }
+
+  local finders = require("telescope.finders")
+  local pickers = require("telescope.pickers")
+  local previewers = require("telescope.previewers")
+  local conf = require("telescope.config").values
+  local all_files = {}
+
+  all_files = run_fd_command(commands_option[current_index])
+  -- all_files = run_fd_command("fd --type f --max-depth 2 . ~/.config")
+  -- all_files = run_fd_command("fd --type f --max-depth 14 . ~/.config -E '*.xml' -E 'coc/*' -E 'raycast' -E 'neovim' -E 'nvim' -E 'alfred' -E 'karabiner/automatic_backups'")
+  -- end
+
+  -- Sort the combined list of files alphabetically
+  table.sort(all_files)
+
+  pickers
+    .new({}, {
+      prompt_title = "["
+        .. current_index
+        .. "/"
+        .. #context_options
+        .. "]"
+        .. " Find config in . . . "
+        .. context_options[current_index],
+      finder = finders.new_table({
+        results = all_files,
+      }),
+      previewer = previewers.cat.new({}),
+
+      sorter = conf.generic_sorter({}),
+      attach_mappings = function(prompt_bufnr, map)
+        -- Bind Ctrl-Space to toggle the search context
+        map({ "i", "n" }, "<C-Space>", function()
+          toggle_context(prompt_bufnr)
+        end)
+        return true
+      end,
+    })
+    :find()
+end
+
 function find_dot_config_files()
   -- https://github.com/nvim-telescope/telescope.nvim/wiki/Configuration-Recipes#having-a-factory-like-function-based-on-a-dict - configure factory like dict differenet find cmds
   -- if current path is ~ only limit to depth = 1  with prompt = find HOME files include hidden files and folders
-  if vim.fn.getcwd() == vim.fn.expand("~") then
+  -- if vim.fn.getcwd() == vim.fn.expand("~") then
+  -- check if path is not inside ~/.config
+  -- if not then find files in ~ and .config
+  if vim.fn.getcwd() ~= vim.fn.expand("~/.config") then
     require("telescope.builtin").find_files({
-      prompt_title = "Find $HOME files",
+      prompt_title = "Find $HOME and .config files",
       cwd = "~",
       find_command = { "fd", "--type", "f", "--hidden", "--max-depth", "1" },
+      -- fd -H -d 1 -t d . ~ ~/.config
+      search_dirs = { "~", ".config" },
+
+      -- find_command = { "fd", "--type", "f", "--hidden", "--max-depth", "1", ".", "~", ".config" },
+      -- # generate fd command to find in both dir ~ and ~/.config with max depth 1
     })
     return
   end
@@ -221,10 +302,15 @@ return {
         end,
         desc = "Find Files From Project Git Root",
       },
+      -- {
+      --   "<leader>fz",
+      --   find_dot_config_files,
+      --   desc = "Find my dotconfig files",
+      -- },
       {
         "<leader>fz",
-        find_dot_config_files,
-        desc = "Find my dotconfig files",
+        find_files_in_home_and_config,
+        desc = "Find my dotconfig files in home and config",
       },
       {
         "<leader>fs",
