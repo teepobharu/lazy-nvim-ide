@@ -84,12 +84,57 @@ return {
 
         require("telescope.pickers")
           .new({}, {
-            prompt_title = "Harpoon",
+            prompt_title = "Harpoon Pickers",
             finder = require("telescope.finders").new_table({
               results = file_paths,
             }),
             previewer = conf.file_previewer({}),
             sorter = conf.generic_sorter({}),
+            attach_mappings = function(prompt_bufnr, map)
+              local reload_picker = function(prompt_bufnr)
+                local state = require("telescope.actions.state")
+                local paths = {}
+                for _, item in ipairs(harpoon:list().items) do
+                  table.insert(paths, item.value)
+                end
+                -- close the telescope window
+                if not state then
+                  return
+                end
+                local current_picker = state.get_current_picker(prompt_bufnr)
+                if #paths < 1 and current_picker then
+                  vim.notify("No mark found", vim.log.levels.INFO, { title = "Harpoon" })
+                  require("telescope.actions").close(prompt_bufnr)
+                  return
+                else
+                  local finder = require("telescope.finders").new_table({
+                    results = paths,
+                  })
+                  current_picker:refresh(finder)
+                end
+              end
+              map("n", "<D-d>", function()
+                local state = require("telescope.actions.state")
+                local selected_entry = state.get_selected_entry()
+                -- Multiline / getselected entry never return full list , getIndex harpoon never return index
+                harpoon:list():remove_at(selected_entry.index)
+                -- __AUTO_GENERATED_PRINT_VAR_START__
+                reload_picker(prompt_bufnr)
+              end)
+              map("i", "<A-d>", function()
+                local state = require("telescope.actions.state")
+                local selected_entry = state.get_selected_entry()
+                harpoon:list():remove_at(selected_entry.index)
+                reload_picker(prompt_bufnr)
+              end)
+              map("n", "<A-d>", function()
+                local state = require("telescope.actions.state")
+                local selected_entry = state.get_selected_entry()
+                harpoon:list():remove_at(selected_entry.index)
+                reload_picker(prompt_bufnr)
+              end)
+              return true
+            end,
           })
           :find()
       end
