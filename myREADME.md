@@ -14,7 +14,7 @@
   - [ ] Diff view : https://github.com/sindrets/diffview.nvim?tab=readme-ov-file
 - Telescopes
   - [x] fzf search alike
-  - [~] Lazygit and dotfiles : use present
+        x [~] Lazygit and dotfiles : use present
     - https://github.com/jesseduffield/lazygit/discussions/1201#discussioncomment-2546527
     - enable file : https://github.com/kdheepak/lazygit.nvim/issues/22#issuecomment-1815426074
 - LSP
@@ -29,22 +29,22 @@ Migration idea
 - [x] disable hardtime ?
 - [x] keymap import before (not to conflict)
 - [ ] Fugitive setup + git root support
-- [ ] Session save and start page correct
-- [ ] neotree key settings change filter not to change when type
+- [x] Session save and start page correct
+- [x] neotree key settings change filter not to change when type
 - [x] check keymap lazygit configure : https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
   - at the end config always read from $HOME/.config/config.yml regardless of XDG_HOME so just copy there
   - understand how it extends : https://github.com/LazyVim/LazyVim/blob/eb6c9fb5784a8001c876203de174cd79e96bb637/lua/lazyvim/util/lazygit.lua#L51
-- [ ] zoxide setup
-- [ ] table format
+- [x] zoxide setup
+- [x] table format - auto format already handled
       ( [ ]Optional)
 - [ ] git open branch url telescope
       Key maps
 - [x] gx open link (+ plugin) + sometimes work in tmux ?
-- [ ] Key maps
+- [x] Key maps
   - [x] resize Windows
   - [x] Sessions saved
   - [x] tab change ( or use gT ? )
-  - [ ] custom Cds , and copy file - or not ?
+  - [x] custom Cds , and copy file - or not ?
 
 ## Configurations
 
@@ -129,25 +129,25 @@ Hidden settings / keymaps
 - enable on config
 - enable format from lazy = <leader>fm
 
-| Key        | Description                                     |
-| ---------- | ----------------------------------------------- |
-| K + K      | see documents params + move to the popup window |
-| gd         | See references                                  |
-| gr         | Reference lsp                                   |
-| gR         | References telescope                            |
-| [d and ]d  | Diagnostics Jump                                |
-| [e and ]e  | Errors Jump                                     |
-| <leader>ca | Code action - to help fix                       |
-| <leader>ld | Line diagnostics                                |
+| Key              | Description                                     |
+| ---------------- | ----------------------------------------------- |
+| K + K            | see documents params + move to the popup window |
+| visual:<C-space> | expand selection                                |
+| gd               | See references                                  |
+| [d and ]d        | Diagnostics Jump                                |
+| [e and ]e        | Errors Jump                                     |
+| <leader>ca       | Code action - to help fix                       |
+| <leader>cA       | bulk file actions                               |
 
 ### Windows
 
-| Key              | Description            |
-| ---------------- | ---------------------- |
-| Esc-hl           | Resize screen          |
-| <leader>h/v      | Split                  |
-| C-\ + C-n        | Terminal Normal Mode   |
-| leader + b/w + d | Delete buffer / window |
+| Key              | Description                                                                       |
+| ---------------- | --------------------------------------------------------------------------------- |
+| Esc-hl           | Resize screen                                                                     |
+| <leader>h/v      | Split                                                                             |
+| C-\ + C-n        | Terminal Normal Mode                                                              |
+| C+/              | Toggle terminal ( <leader>t+. open split but usaully cause hang , can try :term ) |
+| leader + b/w + d | Delete buffer / window                                                            |
 
 ### Navigations
 
@@ -167,6 +167,37 @@ gx - custom function to go to links or directly to github page plugin link
 | f/F/s           | search 1-back / 2                     |
 | S               | search visual block jump              |
 | vmode: , ; (+f) | search Quotes block                   |
+
+Neo Tree
+
+- Fix
+
+CDs
+
+| Key            | Description               |
+| -------------- | ------------------------- |
+| <leader>c.     | Change dir zoxide plugins |
+| <localleader>c | Change dir current file   |
+
+Config file settings / debug
+
+| Key         | Description                  |
+| ----------- | ---------------------------- |
+| <local>rl   | include lua (check test.lua) |
+| <leader>sna | open noice (messages) log    |
+
+### Editing
+
+| Key         | Description                          |
+| ----------- | ------------------------------------ |
+| C-s         | Save                                 |
+| <ll> w      | Save                                 |
+| Y, YY       | copy to system clipboard             |
+| <ll> q      | Quit                                 |
+| za/A        | fold toggle cursor / All             |
+| zd          | fold delete                          |
+| <leader> fm | Format whole file                    |
+| <leader> fF | Toggle Format on Save Buff(!)/Global |
 
 ## Old section
 
@@ -189,44 +220,17 @@ Neo Tree
 CDs
 
 Nvim Tree - TODO: Delete
-| Key | Description |
-| --- | ----------- |
-| <C-n> | Toggle NvimTree |
-| y | Copy file name (with ext) |
-| ge | copy base name (no ext) |
+
+| Key           | Description                                                                            |
+| ------------- | -------------------------------------------------------------------------------------- |
+| <C-n>         | Toggle NvimTree                                                                        |
+| y             | Copy file name (with ext)                                                              |
+| ge            | copy base name (no ext)                                                                |
 | ------------- |
-| Option 1 | use fzf-telescope (on v mode ? )|
-| Option 2| telescope (can try this : https://github.com/nvim-telescope/telescope-fzf-native.nvim)
+| Option 1      | use fzf-telescope (on v mode ? )                                                       |
+| Option 2      | telescope (can try this : https://github.com/nvim-telescope/telescope-fzf-native.nvim) |
 
-Neo Tree
-
-- Fix
-
-CDs
-
-| Key            | Description               |
-| -------------- | ------------------------- |
-| <leader>cd     | Change dir zoxide plugins |
-| <localleader>c | Change dir current file   |
-
-Config file settings / debug
-
-| Key       | Description                  |
-| --------- | ---------------------------- |
-| <local>rl | include lua (check test.lua) |
-
-### Editing
-
-| Key         | Description                          |
-| ----------- | ------------------------------------ |
-| C-s         | Save                                 |
-| <ll> w      | Save                                 |
-| Y, YY       | copy to system clipboard             |
-| <ll> q      | Quit                                 |
-| za/A        | fold toggle cursor / All             |
-| zd          | fold delete                          |
-| <leader> fm | Format whole file                    |
-| <leader> fF | Toggle Format on Save Buff(!)/Global |
+## Others
 
 #### Refactoring
 
@@ -242,6 +246,13 @@ Tables plugin (manual enabled)
 | ----------- | -------------- |
 | <leader> tm | Enable |
 | <leader> tc | Delete column |
+
+### Replacing
+
+Use nvim spectre
+
+- no undo
+  Guide: basic cdo + spectre : https://www.youtube.com/watch?v=YzVmdJ41Xkg&ab_channel=AndrewCourter
 
 ### Searching
 

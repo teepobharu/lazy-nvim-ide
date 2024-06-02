@@ -124,31 +124,27 @@ function find_dot_config_files()
 end
 vim.api.nvim_create_user_command("FindConfig", find_dot_config_files, {})
 
-local session_pickers = function()
+local function session_pickers()
   local finders = require("telescope.finders")
   local pickers = require("telescope.pickers")
   local actions = require("telescope.actions")
   local action_state = require("telescope.actions.state")
   local opts = {}
-
-  local session_dir = vim.g.startify_session_dir or "~/.config/session"
-  -- Logic to handle session previews using the session directory
-  -- You can customize this to display session information or previews
-  -- Example: Display session files in the specified directory
-  local results = {}
-  --
-  -- for file in io.popen('ls ' .. session_dir):lines() do
-  -- find to format output as filename only not the full path
-  --p[[:alnum:]_].*find $(pwd) -name '
-  --for more format see man re_format
-  for file in
-    io.popen(
-      "find " .. session_dir .. ' -maxdepth 1 -type f -name "[[:alpha:][:digit:]][[:alnum:]_]*" -exec basename {} +'
-    )
-      :lines()
-  do
-    -- file that starts with alpahnumerical
-    table.insert(results, { value = file })
+  local get_session_list = function()
+    local session_dir = vim.g.startify_session_dir or "~/.config/session"
+    -- Logic to handle session previews using the session directory
+    -- You can customize this to display session information or previews
+    -- Example: Display session files in the specified directory
+    local results = {}
+    for file in
+      io.popen(
+        "find " .. session_dir .. ' -maxdepth 1 -type f -name "[[:alpha:][:digit:]][[:alnum:]_]*" -exec basename {} +'
+      )
+        :lines()
+    do
+      table.insert(results, { value = file })
+    end
+    return results
   end
 
   -- add key map for loadding with SLoad when press C-enter
@@ -169,6 +165,7 @@ local session_pickers = function()
             vim.cmd("SLoad " .. selection.value)
           end
         end)
+
         map("i", "<C-CR>", function(_prompt_bufnr)
           local entry = action_state.get_selected_entry()
           if entry then
@@ -186,32 +183,59 @@ local session_pickers = function()
 
           local session_name = firstMultiselection or current_line
 
-          if firstMultiSelection then
-            print("Save session from first multi selected " .. firstMultiSelection.value)
-          else
-            print("Save session from input prompt .. " .. current_line)
-          end
-
           if current_line ~= "" then
             vim.cmd("SSave! " .. session_name)
+
+            if firstMultiSelection then
+              vim.notify(
+                "Save session from first multi selected " .. firstMultiSelection.value,
+                vim.log.levels.INFO,
+                { title = "Telescope session" }
+              )
+            else
+              vim.notify(
+                "Save session from input prompt" .. current_line,
+                vim.log.levels.INFO,
+                { title = "Telescope session" }
+              )
+            end
           end
         end
 
+        function reloadResults()
+          local state = require("telescope.actions.state")
+          local current_picker = state.get_current_picker(prompt_bufnr)
+          local new_finder = require("telescope.finders").new_table({
+            results = get_session_list(),
+            -- require below else not working
+            entry_maker = function(entry)
+              return {
+                display = entry.value,
+                value = entry.value,
+                ordinal = entry.value,
+              }
+            end,
+          })
+          current_picker:refresh(new_finder)
+          -- reopen_session_pickers(prompt_bufnr)
+
+          -- close the current picker
+        end
         map("i", "<C-s>", function()
           saveSession(prompt_bufnr)
+          require("telescope.actions").close(prompt_bufnr)
         end)
         map("n", "<C-s>", function()
           saveSession(prompt_bufnr)
+          reloadResults()
         end)
         map("n", "X", function()
           local entry = action_state.get_selected_entry()
           -- confirming
-
-          local user_input = vim.fn.confirm("Confirm Delete Session" .. entry.value, "yesno", 2)
+          local user_input = vim.fn.confirm("Confirm Delete Session: " .. entry.value, "&Yes\n&No", 2)
           if user_input == 1 then
             vim.cmd("SDelete! " .. entry.value)
-            -- local picker = action_state.get_current_picker(_prompt_bufnr)
-            -- picker.refresh()
+            reloadResults()
           end
         end)
 
@@ -219,7 +243,7 @@ local session_pickers = function()
         return true
       end,
       finder = finders.new_table({
-        results = results,
+        results = get_session_list(),
         entry_maker = function(entry)
           return {
             display = entry.value,
