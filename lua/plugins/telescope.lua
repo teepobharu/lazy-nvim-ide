@@ -46,18 +46,18 @@ local function toggle_context(prompt_bufnr)
   current_index = current_index % #context_options + 1
   current_context = context_options[current_index]
 
-  -- close the current picker
+  local current_text = require("telescope.actions.state").get_current_line()
   actions.close(prompt_bufnr)
 
   -- re-run the picker with the new context
-  find_files_in_home_and_config()
+  find_files_in_home_and_config(current_text)
 end
 
 -- custom picker function
-function find_files_in_home_and_config()
+function find_files_in_home_and_config(initialText)
   local commands_option = {
     "fd --type f --hidden --max-depth 1 . ~",
-    "fd --type f --max-depth 1 . ~ ~/.config ",
+    "fd --type f --hidden --max-depth 1 . ~ ~/.config ",
     "fd --type f --max-depth 14 . ~/.config -E '*.xml' -E 'coc/*' -E 'raycast' -E 'neovim' -E 'nvim' -E 'alfred' -E 'karabiner/automatic_backups'",
   }
 
@@ -77,6 +77,7 @@ function find_files_in_home_and_config()
 
   pickers
     .new({}, {
+      default_text = initialText or "",
       prompt_title = "["
         .. current_index
         .. "/"

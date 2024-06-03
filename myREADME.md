@@ -116,12 +116,13 @@ Understand each plugin more: https://www.youtube.com/watch?v=6pAG3BHurdM&ab_chan
 - lazy maps: https://www.lazyvim.org/keymaps#general
   🤩 try to search the keys should already be there
 
-Hidden settings / keymaps
+### Hidden settings / keymaps
 
 - i mode: calculator <C-r>=
 - q: is disabled by default
 
 - C+/ toggle terminal
+  - Esc Esc = normal mode in terminal
 
 ### LSP
 
