@@ -32,6 +32,16 @@ return {
         desc = "Send visual selection to terminal",
         mode = "v",
       },
+      {
+        "<leader>th",
+        "<cmd>:ToggleTerm direction=horizontal<cr>",
+        desc = "Toggle term Horiz",
+      },
+      {
+        "<leader>tv",
+        "<cmd>:ToggleTerm direction=vertical<cr>",
+        desc = "Toggle term vertical",
+      },
     },
   },
 }

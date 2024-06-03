@@ -17,8 +17,9 @@ keymap("n", "<leader>lx", "<cmd>LazyExtras<CR>", { desc = "Lazy Extras" })
 
 keymap("n", "<leader>lc", function()
   LazyVimUtil.lazygit.open({
-    cwd = vim.fn.expand("~/.cfg"),
-    args = { "-w", vim.fn.expand("~"), "--git-dir", vim.fn.expand("~/.cfg") },
+    -- cwd = vim.fn.expand("~/.cfg"),
+    -- args = { "-w", vim.fn.expand("$HOME"), "--git-dir", vim.fn.expand("~/.cfg") },
+    cwd = vim.fn.expand("$DOTFILES_DIR"),
   })
 end, { desc = "LazyGit Config" })
 
