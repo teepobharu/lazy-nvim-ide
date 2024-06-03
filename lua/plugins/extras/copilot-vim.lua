@@ -53,6 +53,9 @@ return {
 
       -- Set <C-d> to dismiss suggestion
       keymap("i", "<C-d>", "<Plug>(copilot-dismiss)", opts)
+
+      opts.desc = "Copilot restart"
+      keymap("n", "<leader>a.", "<cmd>Copilot restart<CR>", opts)
     end,
   },
   -- Add status line icon for copilot
@@ -66,7 +69,7 @@ return {
           return icon
         end,
         cond = function()
-          local ok, clients = pcall(vim.lsp.get_active_clients, { name = "copilot", bufnr = 0 })
+          local ok, clients = pcall(vim.lsp.get_clients, { name = "copilot", bufnr = 0 })
           return ok and #clients > 0
         end,
         color = function()
