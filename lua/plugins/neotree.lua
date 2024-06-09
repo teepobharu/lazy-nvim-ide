@@ -64,6 +64,20 @@ return {
             vim.fn.setreg('"', filepath)
             vim.notify("Copied: " .. filepath)
           end,
+          telescope_livegrep_cwd = function(state)
+            local node = state.tree:get_node()
+            local filepath = node:get_id()
+            local cwdPath = vim.fn.fnamemodify(filepath, ":h")
+            local extra_opts = node.type == "file" and { "-d=1" } or {}
+            require("telescope.builtin").live_grep({ cwd = cwdPath, additional_args = extra_opts })
+          end,
+          telescope_find_files = function(state)
+            local node = state.tree:get_node()
+            local filepath = node:get_id()
+            local cwdPath = vim.fn.fnamemodify(filepath, ":h")
+            local extra_opts = node.type == "file" and { "-d=1" } or {}
+            require("telescope.builtin").find_files({ cwd = cwdPath, opts = extra_opts })
+          end,
         },
         -- https://github.com/nvim-neo-tree/neo-tree.nvim/discussions/370
         filesystem = {
@@ -75,9 +89,18 @@ return {
               ["f"] = "fuzzy_finder",
               ["F"] = "filter_on_submit",
               ["<tab>"] = "toggle_node",
+              -- custom binding
               ["YY"] = "copy_selector",
               ["Yp"] = "copy_file_name_current",
               ["YP"] = "copy_abs_file",
+              ["Tg"] = "telescope_livegrep_cwd",
+              ["tf"] = "telescope_find_files",
+              -- git copied from git mapping
+              -- https://github.com/nvim-neo-tree/neo-tree.nvim/blob/main/README.md#L302
+              ["gu"] = "git_unstage_file",
+              ["ga"] = "git_add_file",
+              ["gr"] = "git_revert_file",
+              ["gc"] = "git_commit",
             },
           },
         },
