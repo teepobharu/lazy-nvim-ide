@@ -19,10 +19,12 @@ end
 
 local function live_grep_from_project_git_root()
   local opts = {}
-
+  local is_in_dotfiles_dir = Path.get_git_root() == vim.env.DOTFILES_DIR
+  local additional_args = is_in_dotfiles_dir and { "--hidden" } or {}
   if Path.is_git_repo() then
     opts = {
       cwd = Path.get_git_root(),
+      additional_args = additional_args,
     }
   end
 

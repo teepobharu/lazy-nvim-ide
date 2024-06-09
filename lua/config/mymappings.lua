@@ -173,6 +173,7 @@ keymap("v", "<M-z>", ":Gitsigns reset_hunk<cr>", { desc = "Reset hunk" })
 -- LOCALLEADER ==========================
 -- ===============================================
 --   # which key migrate .nvim $HOME/.config/nvim/keys/which-key.vim
+keymap("n", "<c-q>", ":q<CR>", { desc = "Close", noremap = true, silent = true })
 keymap("n", "<localleader>q", ":q<CR>", { desc = "Close", noremap = true, silent = true })
 keymap("n", "<localleader>w", ":w<CR>", { desc = "Save file" })
 keymap("n", "<localleader>X", ":qall!<CR>", { desc = "Close All" })
