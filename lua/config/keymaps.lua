@@ -17,7 +17,7 @@ local Cmd = require("utils.cmd")
 -- Create command to stop LSP client
 Cmd.create_cmd("StopLspClient", function()
   -- List all active clients
-  local clients = vim.lsp.get_active_clients()
+  local clients = vim.lsp.get_clients()
   local items = {}
   for _, client in ipairs(clients) do
     table.insert(items, client.name)
