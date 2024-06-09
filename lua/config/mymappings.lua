@@ -82,16 +82,6 @@ keymap("v", "<C-c>", '"+y', { desc = "Copy to system clipboard" })
 --  Navigations
 -- ============================
 -- Tmux navigation - move to plugins config
---
-keymap("n", "<C-k>", "<cmd>NvimTmuxNavigateUp<cr>", opts)
-keymap("n", "<C-j>", "<cmd>NvimTmuxNavigateDown<cr>", opts)
-keymap("n", "<C-h>", "<cmd>NvimTmuxNavigateLeft<cr>", opts)
-keymap("n", "<C-l>", "<cmd>NvimTmuxNavigateRight<cr>", opts)
-
-keymap("t", "<C-k>", "<cmd>NvimTmuxNavigateUp<cr>", opts)
-keymap("t", "<C-j>", "<cmd>NvimTmuxNavigateDown<cr>", opts)
-keymap("t", "<C-h>", "<cmd>NvimTmuxNavigateLeft<cr>", opts)
-keymap("t", "<C-l>", "<cmd>NvimTmuxNavigateRight<cr>", opts)
 
 -- ============================
 --   Windows and Tabs
