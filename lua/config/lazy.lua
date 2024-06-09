@@ -26,6 +26,11 @@ require("lazy").setup({
     -- { import = "lazyvim.plugins.extras.formatting.prettier" },
     -- { import = "lazyvim.plugins.extras.coding.yanky" },
     -- { import = "lazyvim.plugins.extras.vscode" },
+
+    -- my enabled plugins
+    { import = "lazyvim.plugins.extras.coding.mini-surround" },
+    { import = "plugins.extras.my.telescope-zoxide" },
+
     -- import/override with your plugins
     { import = "plugins" },
   },
