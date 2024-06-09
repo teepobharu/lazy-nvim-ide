@@ -2,7 +2,7 @@
 -- setup examples
 -- open spectre search and live grep telescope : https://www.reddit.com/r/neovim/comments/17o6g2n/comment/k7wf2wp/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
 
-local Util = require("lazyvim.util")
+local Util = require("lazy.core.util")
 return {
 
   -- file explorer
@@ -42,12 +42,13 @@ return {
                 if i then
                   local result = results[i]
                   vim.fn.setreg('"', result)
-                  vim.notify("Copied: " .. result)
+                  vim.notify("Copied: " .. result .. " to vim clipboard")
                 else
                   vim.notify("Invalid selection")
                 end
               else
-                vim.notify("Selection cancelled")
+                vim.fn.setreg('"', results[4])
+                vim.notify("Copied: " .. results[4] .. " to vim clipbard by default")
               end
             end)
           end,
