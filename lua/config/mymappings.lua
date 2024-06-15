@@ -32,6 +32,22 @@ vim.cmd([[
   cnoremap <expr> <C-k> wildmenumode() ? "\<C-P>" : "\<C-k>"
 ]])
 
+local function handleMode(mode)
+  return function()
+    if vim.fn.mode() == mode then
+      vim.cmd("normal! y")
+    else
+      vim.cmd("normal! gv")
+    end
+  end
+end
+
+opts.desc = "Yank in visual"
+keymap("v", "v", handleMode("v"), opts)
+keymap("v", "V", handleMode("V"), opts)
+opts.desc = nil
+
+local keymap = vim.keymap.set
 -- Duplicate line and preserve previous yank register
 --  support mode v as
 keymap("n", "<A-d>", function()
