@@ -105,6 +105,7 @@ keymap("v", "<C-c>", '"+y', { desc = "Copy to system clipboard" })
 keymap("n", "<leader>wh", ":sp<CR>", { desc = "HSplit", silent = true })
 keymap("n", "<leader>wv", ":vs<CR>", { desc = "VSplit", silent = true })
 keymap("n", "<M-Tab>", ":tabnext<CR>", { noremap = true, silent = true })
+keymap("t", "<M-Tab>", "<cmd>tabnext<CR>", { noremap = true, silent = true })
 
 -- map("n", "<C-Up>", ":resize -3<CR>", opts)
 -- map("n", "<C-Down>", ":resize +3<CR>", opts)
