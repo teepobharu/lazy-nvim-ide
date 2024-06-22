@@ -6,7 +6,7 @@ print(123123)
 print(n[2])
 
 local opts = { noremap = true, silent = true }
--- local keymap = vim.api.nvim_set_keymap
+local keymap = vim.api.nvim_set_keymap
 local function handleMode(mode)
   return function()
     if vim.fn.mode() == mode then

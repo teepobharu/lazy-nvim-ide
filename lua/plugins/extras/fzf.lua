@@ -357,7 +357,13 @@ return {
       {
         "<leader>fc",
         function()
-          require("fzf-lua").files({ cwd = "~/.config/nvim" })
+          local nvim_appname = vim.fn.expand("$NVIM_APPNAME")
+          local base_path = vim.fn.expand("$XDG_CONFIG_HOME")
+          if nvim_appname then
+            require("fzf-lua").files({ cwd = base_path .. nvim_appname })
+          else
+            require("fzf-lua").files({ cwd = base_path })
+          end
         end,
         desc = "Find Neovim Configs",
       },
