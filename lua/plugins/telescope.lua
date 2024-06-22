@@ -330,11 +330,6 @@ return {
         end,
         desc = "Find Files From Project Git Root",
       },
-      -- {
-      --   "<leader>fz",
-      --   find_dot_config_files,
-      --   desc = "Find my dotconfig files",
-      -- },
       {
         "<leader>fz",
         find_files_in_home_and_config,
