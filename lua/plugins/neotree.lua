@@ -78,6 +78,13 @@ return {
             local extra_opts = node.type == "file" and { "-d=1" } or {}
             require("telescope.builtin").find_files({ cwd = cwdPath, opts = extra_opts })
           end,
+          telescope_cd = function(state)
+            local node = state.tree:get_node()
+            local filepath = node:get_id()
+            local cwdPath = vim.fn.fnamemodify(filepath, ":h")
+            vim.notify("Changing directory to: " .. cwdPath)
+            vim.cmd("cd " .. cwdPath)
+          end,
         },
         -- https://github.com/nvim-neo-tree/neo-tree.nvim/discussions/370
         filesystem = {
@@ -101,6 +108,7 @@ return {
               ["ga"] = "git_add_file",
               ["gr"] = "git_revert_file",
               ["gc"] = "git_commit",
+              ["Tc"] = "telescope_cd",
             },
           },
         },
