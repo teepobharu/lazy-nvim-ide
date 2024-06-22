@@ -77,6 +77,5 @@ return {
 
     local key_opts = { noremap = true, silent = true, desc = "Startify" }
     map("n", "<localleader>,", "<cmd>Startify<cr>", key_opts)
-    -- map("n", "<leader>,", "<cmd>Startify<cr>", key_opts)
   end,
 }
