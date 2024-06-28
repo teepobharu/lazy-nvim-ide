@@ -38,7 +38,14 @@ local function run_fd_command(cmd)
   return vim.split(result, "\n")
 end
 
-local context_options = { "~ and dotfiles", "DOTFILES shallow", "DOTFILES/.config deep", ".config -d2" }
+local context_options =
+  { "~ and DOTFILES tracked", "~ and DOTFILES with ignore", "DOTFILES/.config deep", ".config -d2" }
+local commands_option = {
+  "fd --type f --hidden --max-depth 1 . $HOME $DOTFILES_DIR",
+  "fd --type f --hidden -I --max-depth 1 . $HOME $DOTFILES_DIR",
+  "fd --type f --max-depth 14 . $DOTFILES_DIR/.config -E '*.xml' -E 'coc/*' -E 'raycast' -E 'neovim' -E 'nvim' -E 'alfred' -E 'karabiner/automatic_backups'",
+  "fd --type f --hidden --max-depth 2 . $HOME/.config",
+}
 local current_index = 1
 
 local function toggle_context(prompt_bufnr)
@@ -57,13 +64,6 @@ end
 
 -- custom picker function
 function find_files_in_home_and_config(initialText)
-  local commands_option = {
-    "fd --type f --hidden --max-depth 1 . $HOME $DOTFILES_DIR",
-    "fd --type f --hidden --max-depth 1 . $HOME",
-    "fd --type f --max-depth 14 . $DOTFILES_DIR/.config -E '*.xml' -E 'coc/*' -E 'raycast' -E 'neovim' -E 'nvim' -E 'alfred' -E 'karabiner/automatic_backups'",
-    "fd --type f --hidden --max-depth 2 . $HOME/.config",
-  }
-
   local finders = require("telescope.finders")
   local pickers = require("telescope.pickers")
   local previewers = require("telescope.previewers")
