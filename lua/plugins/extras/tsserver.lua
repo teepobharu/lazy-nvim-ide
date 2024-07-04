@@ -1,5 +1,8 @@
 local Lsp = require("utils.lsp")
 
+-- some settings check process in vscode:  https://www.youtube.com/watch?v=xgcLDX7sdV0&ab_channel=Andr%C3%A9Casal
+-- -- -- typescript language server add support mmax space settings: https://github.com/typescript-language-server/typescript-language-server/pull/252/files
+
 return {
   "neovim/nvim-lspconfig",
   dependencies = {
@@ -67,6 +70,7 @@ return {
         -- inlay hints & code lens, refer to https://github.com/typescript-language-server/typescript-language-server/blob/master/docs/configuration.md/#workspacedidchangeconfiguration
         settings = {
           typescript = {
+            -- maxTsServerMemory = 4096  -- check if needed
             -- Inlay Hints preferences
             inlayHints = {
               -- You can set this to 'all' or 'literals' to enable more hints

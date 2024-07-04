@@ -1,3 +1,5 @@
+-- add more debugging with nvim-dap  ?: https://github.com/nvim-neotest/neotest
+--
 local create_cmd = vim.api.nvim_create_user_command
 
 local function setProjectRootByCurrentBuffer()
