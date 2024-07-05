@@ -20,6 +20,8 @@ return {
         "astro-language-server",
         -- Solidity
         "solidity",
+        --  bash
+        "bash-language-server",
       },
     },
   },

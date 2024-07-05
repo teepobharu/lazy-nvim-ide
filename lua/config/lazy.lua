@@ -18,10 +18,14 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.util.mini-hipatterns" },
     { import = "lazyvim.plugins.extras.lang.yaml" },
     { import = "lazyvim.plugins.extras.linting.eslint" },
-    { import = "plugins.extras.tsserver" },
     { import = "plugins.extras.copilot-chat-v2-fzf" },
+
+    -- my enabled plugins
+    { import = "lazyvim.plugins.extras.coding.mini-surround" },
+    { import = "plugins.extras.telescope-zoxide" },
     -- { import = "plugins.extras.vtsls" }, -- Typescript Server alternative
-    -- { import = "plugins.extras.typescript-tools" }, -- Typescript Server alternative
+    -- { import = "plugins.extras.typescript-tools" }, -- Typescript Server alternative with Deno support ?
+    -- { import = "plugins.extras.tsserver" },
     -- { import = "lazyvim.plugins.extras.lang.typescript" },
     -- { import = "lazyvim.plugins.extras.formatting.prettier" },
     -- { import = "lazyvim.plugins.extras.coding.yanky" },

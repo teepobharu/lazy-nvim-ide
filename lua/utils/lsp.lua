@@ -56,7 +56,7 @@ M.dprint_config_exist = function()
 end
 
 M.deno_config_exist = function()
-  local has_config = get_config_path("deno.json")
+  local has_config = get_config_path("deno.json") or get_config_path("deno.jsonc")
   return has_config ~= nil
 end
 

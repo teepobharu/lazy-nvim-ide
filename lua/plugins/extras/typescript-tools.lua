@@ -31,11 +31,30 @@ return {
     },
     opts = {
       on_attach = function(client, bufnr)
+        -- from:  https://www.reddit.com/r/neovim/comments/10pqkbn/comment/jc1ttzl/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
+        -- Do not comes to on_attach function at all when has in deno project  (but still show in lsp client)
+        local current_dir = vim.fn.expand("%:p:h")
+        vim.notify("Attaching to tsserver : " .. current_dir)
+        -- if require("lspconfig").util.root_pattern("deno.json", "deno.jsonc", "deno.lock")(current_dir) then
+        --   vim.notify("2. Deno config found, disabling tsserver")
+        --   Lsp.stop_lsp_client_by_name("tsserver")
+        --   Lsp.stop_lsp_client_by_name("typescript-tools")
+        --   return
+        -- end
         require("twoslash-queries").attach(client, bufnr)
       end,
+      single_file_support = false,
       root_dir = function(fname)
+        local current_dir = vim.fn.fnamemodify(fname, ":h")
+        -- __AUTO_GENERATED_PRINT_VAR_START__
+        --
+        if require("lspconfig").util.root_pattern("deno.json", "deno.jsonc", "deno.lock")(current_dir) then
+          -- vim.notify("3. Deno config found, disabling tsserver") -- triggered this when deno file found
+          return false
+        end
+        -- config : will check for current cwd or root of git repo
         if Lsp.deno_config_exist() then
-          return true
+          return false -- for deno use denols lspconfig better ?
         end
 
         -- INFO: stealed from:
@@ -73,6 +92,11 @@ return {
   {
     "neovim/nvim-lspconfig",
     opts = {
+      servers = {
+        typescript = {
+          single_file_support = false,
+        },
+      },
       setup = {
         -- Disable tsserver
         tsserver = function()
