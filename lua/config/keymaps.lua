@@ -136,9 +136,6 @@ keymap("n", "zv", "zMzvzz", {
 -- remap "p" in visual mode to delete the highlighted text without overwriting your yanked/copied text, and then paste the content from the unnamed register.
 keymap("v", "p", '"_dP', opts)
 
--- Copy whole file content to clipboard with C-c
-keymap("n", "<C-c>", ":%y+<CR>", opts)
-
 -- Select all text in buffer with Alt-a
 keymap("n", "<A-a>", "ggVG", { noremap = true, silent = true, desc = "Select all" })
 
