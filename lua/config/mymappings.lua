@@ -1,7 +1,6 @@
 local LazyVimUtil = require("lazyvim.util")
 local opts = { noremap = true, silent = true }
 local keymap = vim.keymap.set
-
 -- ===========================
 -- LAZY NVIM ====================
 -- =======================
@@ -50,35 +49,37 @@ opts.desc = nil
 local keymap = vim.keymap.set
 -- Duplicate line and preserve previous yank register
 --  support mode v as
-keymap("n", "<A-d>", function()
-  -- handle visual mode duplicate lien
+function duplicateselected()
   local saved_unnamed = vim.fn.getreg('"')
-  local saved_unnamedplus = vim.fn.getreg("+")
 
-  local current_line = ""
-  local current_mode = vim.fn.visualmode()
-  if current_mode == "V" then
-    -- TODO: make it work
-    -- current_line = vim.fn.getline()
+  local current_selected_line = ""
+  local current_mode = vim.fn.mode()
+  if current_mode == "v" or current_mode == "V" then
+    -- Get the selected lines
+    current_selected_line = vim.fn.getline("`<", "`>")
   else
-    current_line = vim.fn.getline(".")
+    current_selected_line = vim.fn.getline(".")
   end
-  -- Save previous yank registers in a safe place
-  -- propmt inform to choose reg to save
-  -- print("Choose register to save")
-  -- local temp_register = vim.fn.nr2char(vim.fn.getchar()) -- choose char
-  local temp_register = "m"
-  vim.fn.setreg(temp_register, saved_unnamed, "a")
-  vim.fn.setreg('"', current_line, "a")
-  vim.fn.setreg("+", current_line, "a")
-  -- Duplicate the current line
-  -- vim.cmd('normal! yyp')
-  vim.api.nvim_input("yyp")
+
+  print("current_selected_line")
+  print(current_selected_line)
+
+  -- Duplicate the current line or selected lines
+  if current_mode == "v" or current_mode == "V" then
+    -- In visual mode, use normal command to duplicate lines
+    vim.api.nvim_command("normal! y`>p`>")
+    -- vim.api.nvim_command("normal! y`>$p`>") -- new line (will not work with v mode not new line)
+  else
+    -- In normal mode, duplicate the current line
+    vim.cmd("normal! yyp")
+  end
+
   -- Restore previous yank registers
-  vim.fn.setreg('"', saved_unnamed, "a")
-  vim.fn.setreg("+", saved_unnamedplus, "a")
-  vim.fn.setreg(temp_register, "", "a")
-end, { desc = "Duplicate line and preserve yank register" })
+  vim.fn.setreg('"', saved_unnamed)
+end
+
+keymap("n", "<A-d>", duplicateselected, { desc = "Duplicate line and preserve yank register" })
+keymap("v", "<A-d>", duplicateselected, { desc = "Duplicate line and preserve yank register" })
 
 -- " Copy to system clipboard
 -- vnoremap <leader>y "+y
@@ -197,6 +198,7 @@ keymap("n", "<localleader>X", ":qall!<CR>", { desc = "Close All" })
 keymap("n", ",c", ":lcd%:p:h <CR>", { desc = "CD to current dir" })
 -- files
 keymap("n", "<localleader>rl", ":luafile %<CR>", { desc = "Reload Lua file" })
+keymap("v", "<localleader>rl", ":luafile %<CR>", { desc = "Reload Lua file" })
 -- map('n', 'localleader>rp', ':python3 %<CR>', { desc = "Run Python3" })
 
 -- ===========================
@@ -257,3 +259,13 @@ keymap({ "n", "v" }, "gx", function()
   -- print("!" .. open_command .. " " .. url_repo())
   -- vim.cmd("!" .. open_command .. " " .. url_repo())
 end, { silent = true, desc = "Copy word / Open url" })
+
+set_opfunc = vim.fn[vim.api.nvim_exec(
+  [[
+  func s:set_opfunc(val)
+    let &opfunc = a:val
+  endfunc
+  echon get(function('s:set_opfunc'), 'name')
+]],
+  true
+)]
