@@ -18,7 +18,6 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.util.mini-hipatterns" },
     { import = "lazyvim.plugins.extras.lang.yaml" },
     { import = "lazyvim.plugins.extras.linting.eslint" },
-    { import = "plugins.extras.copilot-chat-v2-fzf" },
 
     -- my enabled plugins
     { import = "lazyvim.plugins.extras.coding.mini-surround" },
