@@ -67,14 +67,16 @@ return {
           telescope_livegrep_cwd = function(state)
             local node = state.tree:get_node()
             local filepath = node:get_id()
-            local cwdPath = vim.fn.fnamemodify(filepath, ":h")
+            local is_dir = node.type == "directory"
+            local cwdPath = is_dir and filepath or vim.fn.fnamemodify(filepath, ":h")
             local extra_opts = node.type == "file" and { "-d=1" } or {}
             require("telescope.builtin").live_grep({ cwd = cwdPath, additional_args = extra_opts })
           end,
           telescope_find_files = function(state)
             local node = state.tree:get_node()
             local filepath = node:get_id()
-            local cwdPath = vim.fn.fnamemodify(filepath, ":h")
+            local is_dir = node.type == "directory"
+            local cwdPath = is_dir and filepath or vim.fn.fnamemodify(filepath, ":h")
             local extra_opts = node.type == "file" and { "-d=1" } or {}
             require("telescope.builtin").find_files({ cwd = cwdPath, opts = extra_opts })
           end,
