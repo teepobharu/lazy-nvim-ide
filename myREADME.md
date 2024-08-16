@@ -46,6 +46,13 @@ Migration idea
   - [x] tab change ( or use gT ? )
   - [x] custom Cds , and copy file - or not ?
 
+## Issues
+
+- [ ] Search panes froze and whichkey hidden
+  - reporduce go to serverside mmb have lsp enable on omnisharp
+  - try use git fiiels search
+  - is it which key version update ?
+
 ## Configurations
 
 ### Examples
